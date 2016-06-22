@@ -63,7 +63,7 @@ public class Supplier_page {
 	}
 	
 	/**
-	 * C
+	 * Constructor required for PageFactory
 	 * 
 	 */
 	public Supplier_page (WebDriver driver){
