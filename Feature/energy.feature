@@ -29,8 +29,8 @@ Given I am successfully on Your Supplier page
 And my postcode is "PE2 6YS"
 And I click on find postcode
 And I do have my energy bill
-##And I want to compare Gas & Electricity prices
-##And I have different Gas & Electricity suppliers
+And I want to compare Gas & Electricity prices
+And I have different Gas & Electricity suppliers
 ##When I click on British Gas as my electricity supplier
 ##And I click on other supplier dropdown and select Spark Energy
 ##And I click Next to continue

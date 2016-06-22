@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -37,83 +38,29 @@ public class Supplier_page {
 	@CacheLookup
 	private WebElement iveGotMyBill_radioButton;
 	
-/*	@FindBy(xpath = "//*[@id='have-bill-label' and @class='checked']")
+	@FindBy (id = "compare-both-label")
 	@CacheLookup
-	private WebElement isChecked;
+	private WebElement gasAndElectricity_button;
 	
-	@FindBy(xpath = "//*[@id='have-bill-label' and @class='']")
+	@FindBy (id = "compare-electricity-label")
 	@CacheLookup
-	private WebElement isNotChecked;
-	*/
+	private WebElement electricityOnly_button;
 	
+	@FindBy (id = "compare-gas-label")
+	@CacheLookup
+	private WebElement gasOnly_button;
 	
+	@FindBy (id = "same-supplier-yes")
+	@CacheLookup
+	private WebElement gasAndElectricity_YesTheyAreFromSameSupplier;
 	
-    
-    public Supplier_page clickIDontHaveMyBillButton(){
-    	//This is not a good implementation for a Radio Button. 
-    	
-    iDontHaveMyBill_radioButton.click();    
-    return this;
-    }
-    
-    public Supplier_page clickIveGotMyBillButton(){
-    	//This is not a good implementation for a Radio Button. 
-/*    WebElement isChecked = driver.findElement(By.xpath("//*[@id='no-bill-label' and @class='checked']"));
-    WebElement isNotChecked = driver.findElement(By.xpath("//*[@id='no-bill-label' and @class='']"));*/
-    	List<WebElement> elements = driver.findElements(By.xpath("//*[@id='have-bill-label' and @class='checked']"));
-    		int el = elements.get(0).getSize();
-    			if (elements != 0) {
-    				
-    			}
-    	
-    	
- /*   if (isChecked.isDisplayed()){
-    	log.info("I've Got My Bill is already selected.");
-    } else if (isNotChecked.isDisplayed()){
-    	iveGotMyBill_radioButton.click(); 
-    	log.info("I've Got My Bill has been clicked");
-    	}*/
-    return this;
-    }
+	/*@FindBy (xpath = "//*[@id='same-supplier-question']/div/div/label[2]")*/
+	@FindBy (xpath = "//*[@label='same-supplier-no']")
+	@CacheLookup
+	private WebElement gasAndElectricity_NotFromSameSupplier;
+	
 
-/*    public Supplier_page setIDontHaveMyBillRadioButtonField() {
-        for (WebElement el : iDontHaveMyBill) {
-            if (el.getAttribute("value").equals(iDontHaveMyBillValue)) {
-                if (!el.isSelected()) {
-                    el.click();
-                }
-                break;
-            }
-        }
-        return this;
-    }*/
-	
-/*	public Supplier_page clickIveGotMyBillRadioButton(){
-		for (WebElement bills : bothBills) {
-			if (bills.getAttribute("value").equals(iDontHaveMyBillValue)){
-				bills.click();
-			}
-			break;
-		}
-		return this;
-	}
-	*/
-	/*	
-	 * setDefaultToIveGotMyBill - NOTREQUIRED
-	 * 
-	 * @return this Supplier_page class instance.
-	 * 
-	 public Supplier_page setDefaultToIveGotMyBillRadioButton(){
-			for (WebElement bills : bothBills){
-				if (bills.getAttribute("value").equals(iDontHaveMyBillValue)){
-					if (!bills.isSelected()){
-						bills.click();
-					}
-					break;
-				}
-			}
-			return this;
-		}*/
+
 	/**
 	 * Verify that the current URL matches with the expected URL (found in Strings.java)
 	 * 
@@ -121,7 +68,7 @@ public class Supplier_page {
 	 */
 	public Supplier_page verifyUserIsOnCorrectPage(){
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
-		if (wait.until(ExpectedConditions.urlToBe(Strings.expectedEnergyURL)) == true){
+		if (wait.until(ExpectedConditions.urlToBe(Strings.expectedBaseURL)) == true){
 			log.info("Page URL matches with expected Your Supplier URL. User is successfully on the Your Supplier page.");
 		}
 		return this;
@@ -136,6 +83,7 @@ public class Supplier_page {
 	 */
 	public Supplier_page setWhatIsYourPostcode(String whatIsYourPostcodeValue) {
 		whatIsYourPostcode_textbox.sendKeys(whatIsYourPostcodeValue);
+		log.info("Postcode: " + whatIsYourPostcodeValue + " has successfully been entered into postcode textbox.");
 		return this;
 		
 	}
@@ -147,11 +95,130 @@ public class Supplier_page {
 	 */
 	public Supplier_page clickFindPostcodeButton() {
 		findPostcode_button.click();
+		log.info("Find Postcode button has been clicked.");
 		return this;
 	}
 	
-	
-
+	/**
+	 * Click on I Don't Have My Bill button
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickIDontHaveMyBillButton(){
+    	//This is not the best implementation for a radioButton (usually FOR loop)
+    	String isCheckedPresentInClass = iDontHaveMyBill_radioButton.getAttribute("class");
+    	
+    	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
+    		log.info("I Don't Have My Bill button is already selected. Skipping step.");
+    	} else {
+    	    iDontHaveMyBill_radioButton.click();
+    	    log.info("I Don't Have My Bill clicked.");
+    	}
+    return this;
+    }
+    
+	/**
+	 * Click on I've Got My Bill button
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickIveGotMyBillButton(){
+    	//This is not a good implementation for a Radio Button. 
+    	String isCheckedPresentInClass = iveGotMyBill_radioButton.getAttribute("class");
+    	
+    	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
+    		log.info("I've Got My Bill button is already selected. Skipping step.");
+    	} else {
+    	    iveGotMyBill_radioButton.click();
+    	    log.info("I've Got My Bill clicked.");
+    	}
+        return this;
+        }
+    
+	/**
+	 * Click on Gas & Electricity button
+	 * 
+	 * @return this Supplier_page class instance.
+	 */	
+    public Supplier_page clickGasAndElectricityButton(){
+    	String isCheckedPresentInClass = gasAndElectricity_button.getAttribute("class");
+    	
+    	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
+    		log.info("Gas & Electricity is already selected. Skipping step.");
+    	} else {
+    		gasAndElectricity_button.click();
+    		log.info("Gas & Electricity button clicked.");
+    	}
+    	return this;
+    }
+    
+	/**
+	 * Click on Electricity Only button
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickElectricityOnlyButton(){
+    	String isCheckedPresentInClass = electricityOnly_button.getAttribute("class");
+    	
+    	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
+    		log.info("Electricity Only is already selected. Skipping step.");
+    	} else {
+    		electricityOnly_button.click();
+    		log.info("Electricity Only clicked.");
+    	}
+    	return this;
+    }
+    
+	/**
+	 * Click on Gas Only button
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickGasOnlyButton(){
+    	String isCheckedPresentInClass = gasOnly_button.getAttribute("class");
+    	
+    	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
+    		log.info("Gas Only is already selected. Skipping step.");
+    	} else {
+    		gasOnly_button.click();
+    		log.info("Gas Only clicked.");
+    	}
+    	return this;
+    }
+    
+	/**
+	 * Click on Yes they are from the same supplier checkbox
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickYesForGasAndElectricitySuppliersCheckbox(){
+    	String isCheckedPresentInClass = gasAndElectricity_YesTheyAreFromSameSupplier.getAttribute("class");
+    	log.info(isCheckedPresentInClass);
+    	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
+    		log.info("Yes checkbox is already selected. Skipping step.");
+    	} else {
+    		gasAndElectricity_YesTheyAreFromSameSupplier.click();
+    		log.info("Yes checkbox clicked. User has the same supplier.");
+    	}
+    	return this;
+    }
+    
+	/**
+	 * Click on No they are not from the same supplier checkbox
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickNoForGasAndElectricitySuppliersCheckbox(){
+    	String isCheckedPresentInClass = gasAndElectricity_NotFromSameSupplier.getAttribute("class");
+    	log.info(isCheckedPresentInClass);
+    	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
+    		log.info("No checkbox is already selected. Skipping step.");
+    	} else {
+    		gasAndElectricity_NotFromSameSupplier.click();
+    		log.info("No checkbox clicked. User does not have the same supplier.");
+    	}
+    	return this;
+    }
 	
 	/**
 	 * Constructor required for PageFactory
