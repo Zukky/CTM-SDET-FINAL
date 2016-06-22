@@ -18,16 +18,17 @@
 
 #Sample Feature Definition Template
 @tag
-Feature: Buy a duel fuel tariff
+Feature: Buy a Duel Fuel tariff
 	In order to ensure I can purchase a duel fuel tariff (Gas & Electricity), 
-	I want to run a cucumber test to compare Gas & Electricity combined prices and then allow me to purchase. 
+	I want to run a cucumber test to compare Gas & Electricity combined prices and then I want to purchase it.
+	This is a full end-to-end user journey from selecting, entering and purchasing a duel fuel tariff.
 
 @tag1
 Scenario: Title of your scenario
-Given I am on Your Supplier page
+Given I am successfully on Your Supplier page
 And my postcode is "PE2 6YS"
 And I click on find postcode
-And I do not have my energy bill
+And I do have my energy bill
 ##And I want to compare Gas & Electricity prices
 ##And I have different Gas & Electricity suppliers
 ##When I click on British Gas as my electricity supplier

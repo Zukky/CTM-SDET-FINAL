@@ -1,7 +1,11 @@
 package pageObjects;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -25,7 +29,91 @@ public class Supplier_page {
 	@CacheLookup
 	private WebElement findPostcode_button;
 	
+	@FindBy(id = "no-bill-label")
+	@CacheLookup
+	private WebElement iDontHaveMyBill_radioButton;
+	
+	@FindBy(id = "have-bill-label")
+	@CacheLookup
+	private WebElement iveGotMyBill_radioButton;
+	
+/*	@FindBy(xpath = "//*[@id='have-bill-label' and @class='checked']")
+	@CacheLookup
+	private WebElement isChecked;
+	
+	@FindBy(xpath = "//*[@id='have-bill-label' and @class='']")
+	@CacheLookup
+	private WebElement isNotChecked;
+	*/
+	
+	
+	
+    
+    public Supplier_page clickIDontHaveMyBillButton(){
+    	//This is not a good implementation for a Radio Button. 
+    	
+    iDontHaveMyBill_radioButton.click();    
+    return this;
+    }
+    
+    public Supplier_page clickIveGotMyBillButton(){
+    	//This is not a good implementation for a Radio Button. 
+/*    WebElement isChecked = driver.findElement(By.xpath("//*[@id='no-bill-label' and @class='checked']"));
+    WebElement isNotChecked = driver.findElement(By.xpath("//*[@id='no-bill-label' and @class='']"));*/
+    	List<WebElement> elements = driver.findElements(By.xpath("//*[@id='have-bill-label' and @class='checked']"));
+    		int el = elements.get(0).getSize();
+    			if (elements != 0) {
+    				
+    			}
+    	
+    	
+ /*   if (isChecked.isDisplayed()){
+    	log.info("I've Got My Bill is already selected.");
+    } else if (isNotChecked.isDisplayed()){
+    	iveGotMyBill_radioButton.click(); 
+    	log.info("I've Got My Bill has been clicked");
+    	}*/
+    return this;
+    }
 
+/*    public Supplier_page setIDontHaveMyBillRadioButtonField() {
+        for (WebElement el : iDontHaveMyBill) {
+            if (el.getAttribute("value").equals(iDontHaveMyBillValue)) {
+                if (!el.isSelected()) {
+                    el.click();
+                }
+                break;
+            }
+        }
+        return this;
+    }*/
+	
+/*	public Supplier_page clickIveGotMyBillRadioButton(){
+		for (WebElement bills : bothBills) {
+			if (bills.getAttribute("value").equals(iDontHaveMyBillValue)){
+				bills.click();
+			}
+			break;
+		}
+		return this;
+	}
+	*/
+	/*	
+	 * setDefaultToIveGotMyBill - NOTREQUIRED
+	 * 
+	 * @return this Supplier_page class instance.
+	 * 
+	 public Supplier_page setDefaultToIveGotMyBillRadioButton(){
+			for (WebElement bills : bothBills){
+				if (bills.getAttribute("value").equals(iDontHaveMyBillValue)){
+					if (!bills.isSelected()){
+						bills.click();
+					}
+					break;
+				}
+			}
+			return this;
+		}*/
 	/**
 	 * Verify that the current URL matches with the expected URL (found in Strings.java)
 	 * 
@@ -61,6 +149,9 @@ public class Supplier_page {
 		findPostcode_button.click();
 		return this;
 	}
+	
+	
+
 	
 	/**
 	 * Constructor required for PageFactory

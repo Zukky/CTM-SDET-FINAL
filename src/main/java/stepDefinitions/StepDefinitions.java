@@ -17,7 +17,7 @@ public class StepDefinitions {
 @Before
 public void Setup(){
 	//remember to externalise these into a constants class
-	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Zukky Baig\\Box Sync\\Selenium Drivers\\chromedriver.exe");
+	System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver.exe");
 	driver = new ChromeDriver();
 	driver.manage().window().maximize();
 	driver.get(Strings.energyURL);
@@ -28,25 +28,26 @@ public void Setup(){
 public void tearDown(){
 	
 }
-@Given("^I am on Your Supplier page$")
+@Given("^I am successfully on Your Supplier page$")
 public void i_am_on_your_supplier_page() throws Throwable {
-	supplierPage.verifyUserIsOnCorrectPage();
+	//supplierPage.verifyUserIsOnCorrectPage();
 }
 
 
 @Given("^my postcode is \"([^\"]*)\"$")
 public void my_postcode_is(String postcode) throws Throwable {
-   supplierPage.setWhatIsYourPostcode(postcode);
+ //  supplierPage.setWhatIsYourPostcode(postcode);
 }
 
 @Given("^I click on find postcode$")
 public void i_click_on_find_postcode() throws Throwable {
-    supplierPage.clickFindPostcodeButton();
+ //   supplierPage.clickFindPostcodeButton();
 }
 
-@Given("^I do not have my energy bill$")
-public void i_do_not_have_my_energy_bill() throws Throwable {
-    // Write code here that turns the phrase above into concrete actions
-
+@Given("^I do have my energy bill$")
+public void i_do_have_my_energy_bill() throws Throwable {
+    //supplierPage.clickIveGotMyBillRadioButton();
+	supplierPage.clickIDontHaveMyBillButton();
+	supplierPage.clickIveGotMyBillButton();
 }
 }
