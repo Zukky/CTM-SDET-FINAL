@@ -1,16 +1,13 @@
 package pageObjects;
 
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -20,7 +17,9 @@ public class Supplier_page {
 
 	private static Logger log = LogManager.getLogger(Supplier_page.class);
 	private WebDriver driver;
+	private WebDriverWait wait;
 	private int timeout = 20;
+	
 
     @FindBy(id = "your-postcode")
     @CacheLookup
@@ -50,16 +49,21 @@ public class Supplier_page {
 	@CacheLookup
 	private WebElement gasOnly_button;
 	
-	@FindBy (id = "same-supplier-yes")
+	@FindBy (xpath = "//label[@for='same-supplier-yes']")
 	@CacheLookup
-	private WebElement gasAndElectricity_YesTheyAreFromSameSupplier;
+	private WebElement yesTheyAreFromSameSupplier_radioButton;
 	
-	/*@FindBy (xpath = "//*[@id='same-supplier-question']/div/div/label[2]")*/
-	@FindBy (xpath = "//*[@label='same-supplier-no']")
+	@FindBy (xpath = "//label[@for='same-supplier-no']")
 	@CacheLookup
-	private WebElement gasAndElectricity_NotFromSameSupplier;
+	private WebElement notFromSameSupplier_radioButton;
 	
-
+	@FindBy (id = "39")
+	@CacheLookup
+	private WebElement britishGas_button;
+/*	@FindBy (xpath = "//*[@id='same-supplier-no']/parent::label")
+	@CacheLookup
+	private WebElement NotFromSameSupplier_class;
+*/
 
 	/**
 	 * Verify that the current URL matches with the expected URL (found in Strings.java)
@@ -67,7 +71,7 @@ public class Supplier_page {
 	 * @return this Supplier_page class instance.
 	 */
 	public Supplier_page verifyUserIsOnCorrectPage(){
-		WebDriverWait wait = new WebDriverWait(driver, timeout);
+		wait = new WebDriverWait(driver, timeout);
 		if (wait.until(ExpectedConditions.urlToBe(Strings.expectedBaseURL)) == true){
 			log.info("Page URL matches with expected Your Supplier URL. User is successfully on the Your Supplier page.");
 		}
@@ -82,6 +86,7 @@ public class Supplier_page {
 	 * @return this Supplier_page class instance.
 	 */
 	public Supplier_page setWhatIsYourPostcode(String whatIsYourPostcodeValue) {
+		whatIsYourPostcode_textbox.clear();
 		whatIsYourPostcode_textbox.sendKeys(whatIsYourPostcodeValue);
 		log.info("Postcode: " + whatIsYourPostcodeValue + " has successfully been entered into postcode textbox.");
 		return this;
@@ -93,9 +98,16 @@ public class Supplier_page {
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
-	public Supplier_page clickFindPostcodeButton() {
+	public Supplier_page clickFindPostcode() {
 		findPostcode_button.click();
 		log.info("Find Postcode button has been clicked.");
+		
+		wait = new WebDriverWait(driver, timeout);
+		WebElement checkIfNextPartIsVisible = wait.until(ExpectedConditions.visibilityOf(yesTheyAreFromSameSupplier_radioButton));
+		
+		if (checkIfNextPartIsVisible.isDisplayed()) {
+			log.info("Next set of questions are visible to user. Continuing tests.");
+		} 
 		return this;
 	}
 	
@@ -104,8 +116,7 @@ public class Supplier_page {
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
-    public Supplier_page clickIDontHaveMyBillButton(){
-    	//This is not the best implementation for a radioButton (usually FOR loop)
+    public Supplier_page clickIDontHaveMyBill(){
     	String isCheckedPresentInClass = iDontHaveMyBill_radioButton.getAttribute("class");
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
@@ -122,8 +133,7 @@ public class Supplier_page {
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
-    public Supplier_page clickIveGotMyBillButton(){
-    	//This is not a good implementation for a Radio Button. 
+    public Supplier_page clickIveGotMyBill(){
     	String isCheckedPresentInClass = iveGotMyBill_radioButton.getAttribute("class");
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
@@ -140,7 +150,7 @@ public class Supplier_page {
 	 * 
 	 * @return this Supplier_page class instance.
 	 */	
-    public Supplier_page clickGasAndElectricityButton(){
+    public Supplier_page clickGasAndElectricity(){
     	String isCheckedPresentInClass = gasAndElectricity_button.getAttribute("class");
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
@@ -157,7 +167,7 @@ public class Supplier_page {
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
-    public Supplier_page clickElectricityOnlyButton(){
+    public Supplier_page clickElectricityOnly(){
     	String isCheckedPresentInClass = electricityOnly_button.getAttribute("class");
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
@@ -174,7 +184,7 @@ public class Supplier_page {
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
-    public Supplier_page clickGasOnlyButton(){
+    public Supplier_page clickGasOnly(){
     	String isCheckedPresentInClass = gasOnly_button.getAttribute("class");
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
@@ -191,14 +201,14 @@ public class Supplier_page {
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
-    public Supplier_page clickYesForGasAndElectricitySuppliersCheckbox(){
-    	String isCheckedPresentInClass = gasAndElectricity_YesTheyAreFromSameSupplier.getAttribute("class");
+    public Supplier_page clickYesForGasAndElectricitySuppliers(){
+    	String isCheckedPresentInClass = yesTheyAreFromSameSupplier_radioButton.getAttribute("class");
     	log.info(isCheckedPresentInClass);
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
-    		log.info("Yes checkbox is already selected. Skipping step.");
+    		log.info("'Yes' radio button is already selected. Skipping step.");
     	} else {
-    		gasAndElectricity_YesTheyAreFromSameSupplier.click();
-    		log.info("Yes checkbox clicked. User has the same supplier.");
+    		yesTheyAreFromSameSupplier_radioButton.click();
+    		log.info("'Yes' radio button clicked. User has the same supplier for Gas and Electricity.");
     	}
     	return this;
     }
@@ -208,23 +218,41 @@ public class Supplier_page {
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
-    public Supplier_page clickNoForGasAndElectricitySuppliersCheckbox(){
-    	String isCheckedPresentInClass = gasAndElectricity_NotFromSameSupplier.getAttribute("class");
-    	log.info(isCheckedPresentInClass);
+    public Supplier_page clickNoForGasAndElectricitySuppliers(){
+    	String isCheckedPresentInClass = notFromSameSupplier_radioButton.getAttribute("class");
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
-    		log.info("No checkbox is already selected. Skipping step.");
+    		log.info("'No' radio button is already selected. Skipping step.");
     	} else {
-    		gasAndElectricity_NotFromSameSupplier.click();
-    		log.info("No checkbox clicked. User does not have the same supplier.");
+			notFromSameSupplier_radioButton.click();
+    		log.info("'No' radio button clicked. User has different suppliers for Gas and Electricity.");
     	}
+
     	return this;
     }
-	
+    
 	/**
-	 * Constructor required for PageFactory
+	 * Click on British Gas button
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickBritishGas(){
+    	String isCheckedPresentInClass = britishGas_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'British Gas' is already selected. Skipping step.");
+    	} else {
+			britishGas_button.click();
+    		log.info("'British Gas' radio button clicked.");
+    	}
+
+    	return this;
+    }
+
+	/**
+	 * Constructor required for PageFactory with implicitWaits to poll DOM
 	 * 
 	 */
 	public Supplier_page (WebDriver driver){
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		this.driver = driver;
 	}
 
