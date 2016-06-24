@@ -425,13 +425,22 @@ public class Supplier_page {
     		liListArray[i-1] = eachSupplier;
     	}
     	
-    	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-    	int conversionArray = Arrays.asList(liListArray).indexOf(otherSupplierValue);
-    	    	
-    	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-    	listOfLi.get(conversionArray).click();
-    	log.info(otherSupplierValue + " has been selected.");
-    	
+    	try {
+        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
+        	int conversionArray = Arrays.asList(liListArray).indexOf(otherSupplierValue);
+        	
+        	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
+        	if (conversionArray < 0) {
+        		log.info(otherSupplierValue + " is not found! Please write a value that exists!");
+        	} else {
+            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
+            	listOfLi.get(conversionArray).click();
+            	log.info(otherSupplierValue + " has been selected.");
+        	}
+    	}
+    	 catch (ArrayIndexOutOfBoundsException e) {
+     		log.error(e);
+     	}  	
     	return this;
     }
     
@@ -567,13 +576,23 @@ public class Supplier_page {
     		liListArray[i-1] = eachSupplier;
     	}
     	
-    	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-    	int conversionArray = Arrays.asList(liListArray).indexOf(otherSupplierValue);
-    	    	
-    	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-    	listOfLi.get(conversionArray).click();
-    	log.info(otherSupplierValue + " has been selected.");
-    	
+
+    	try {
+        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
+        	int conversionArray = Arrays.asList(liListArray).indexOf(otherSupplierValue);
+        	
+           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
+        	if (conversionArray < 0) {
+        		log.info(otherSupplierValue + " is not found! Please write a value that exists!");
+        	} else {
+            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
+            	listOfLi.get(conversionArray).click();
+            	log.info(otherSupplierValue + " has been selected.");
+        	}
+    	}
+    	 catch (ArrayIndexOutOfBoundsException e) {
+     		log.error(e);
+     	}  	
     	return this;
     }
     

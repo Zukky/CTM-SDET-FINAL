@@ -34,7 +34,7 @@ And I have different Gas & Electricity suppliers
 When I click on British Gas as my electricity supplier
 But I click on the electricity other supplier dropdown and select "E"
 And I click on EDF Energy as my gas supplier
-But I click on the gas other supplier dropdown and select "Glide"
+But I click on the gas other supplier dropdown and select "NEG"
 And I click Next to continue
 Then I should move successfully onto Your Energy page
 

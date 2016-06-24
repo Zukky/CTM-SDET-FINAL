@@ -10,7 +10,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import pageObjects.Supplier_page;
-import support.Strings;
+
 
 public class StepDefinitions {
 	
@@ -31,7 +31,7 @@ public void tearDown(){
 	
 }
 @Given("^I am successfully on Your Supplier page$")
-public void i_am_on_your_supplier_page() throws Throwable {
+public void i_am_on_your_supplier_page() {
 	supplierPage.verifyUserIsOnCorrectPage();
 }
 
@@ -61,7 +61,7 @@ public void i_have_different_gas_and_electricity_suppliers() throws Throwable {
 
 @Given("^I click on British Gas as my electricity supplier$")
 public void i_click_on_British_Gas_as_my_electricity_supplier() throws Throwable {
-	supplierPage.clickEONForElectricity();
+	supplierPage.clickBritishGasForElectricity();
 
 }
 @Given("^I click on the electricity other supplier dropdown and select \"([^\"]*)\"$")
