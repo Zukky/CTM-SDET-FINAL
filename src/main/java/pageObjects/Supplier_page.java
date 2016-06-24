@@ -1,6 +1,5 @@
 package pageObjects;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +12,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import support.Strings;
@@ -408,9 +406,9 @@ public class Supplier_page {
     	
     	//Create a List for all of the <li> elements under <div id = sel1_chosen>. Which is where all of the other suppliers are stored.
     	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='sel1_chosen']/div/ul")).findElements(By.tagName("li"));
-
-    	//Instantiate an Array to store all of the <li> elements (other suppliers) so we can refer to them later.
-    	String[] liListArray = new String[50];
+    	
+    	//Instantiate an Array to store all of the <li> elements (other suppliers) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
+    	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (other suppliers) and get the text value of it. Starting from 1.
     	for(int i=1; i<listOfLi.size(); i++) {
@@ -560,8 +558,8 @@ public class Supplier_page {
     	//Create a List for all of the <li> elements under <div id = sel1_chosen>. Which is where all of the other suppliers are stored.
     	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='sel2_chosen']/div/ul")).findElements(By.tagName("li"));
 
-    	//Instantiate an Array to store all of the <li> elements (other suppliers) so we can refer to them later.
-    	String[] liListArray = new String[50];
+    	//Instantiate an Array to store all of the <li> elements (other suppliers) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
+    	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (other suppliers) and get the text value of it. Starting from 1.
     	for(int i=1; i<listOfLi.size(); i++) {
@@ -628,7 +626,8 @@ public class Supplier_page {
 	 * 
 	 */
 	public Supplier_page (WebDriver driver){
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
 		this.driver = driver;
 	}
 
