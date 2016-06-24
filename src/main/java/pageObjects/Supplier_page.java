@@ -1,14 +1,19 @@
 package pageObjects;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import support.Strings;
@@ -57,13 +62,71 @@ public class Supplier_page {
 	@CacheLookup
 	private WebElement notFromSameSupplier_radioButton;
 	
-	@FindBy (id = "39")
+	@FindBy (xpath = "//label[@for='electricity-top-six-british-gas']")
 	@CacheLookup
-	private WebElement britishGas_button;
+	private WebElement britishGas_electricity_button;
+	
+	@FindBy (xpath = "//label[@for='electricity-top-six-edf']")
+	@CacheLookup
+	private WebElement edfEnergy_electricity_button;
+	
+	@FindBy (xpath = "//label[@for='electricity-top-six-eon']")
+	@CacheLookup
+	private WebElement eon_electricity_button;
+	
+	@FindBy (xpath = "//label[@for='electricity-top-six-npower']")
+	@CacheLookup
+	private WebElement nPower_electricity_button;
+	
+	@FindBy (xpath = "//label[@for='electricity-top-six-scottish-power']")
+	@CacheLookup
+	private WebElement scottishPower_electricity_button;
+	
+	@FindBy (xpath = "//label[@for='electricity-top-six-sse']")
+	@CacheLookup
+	private WebElement sse_electricity_button;
+	
 /*	@FindBy (xpath = "//*[@id='same-supplier-no']/parent::label")
 	@CacheLookup
 	private WebElement NotFromSameSupplier_class;
 */
+	@FindBy (id = "electricity-supplier-dropdown-control")
+	@CacheLookup
+	private WebElement dropDownElectricity;
+	
+	@FindBy (xpath = "//label[@for='gas-top-six-british-gas']")
+	@CacheLookup
+	private WebElement britishGas_gas_button;
+	
+	@FindBy (xpath = "//label[@for='gas-top-six-edf']")
+	@CacheLookup
+	private WebElement edfEnergy_gas_button;
+	
+	@FindBy (xpath = "//label[@for='gas-top-six-eon']")
+	@CacheLookup
+	private WebElement eon_gas_button;
+	
+	@FindBy (xpath = "//label[@for='gas-top-six-npower']")
+	@CacheLookup
+	private WebElement nPower_gas_button;
+	
+	@FindBy (xpath = "//label[@for='gas-top-six-scottish-power']")
+	@CacheLookup
+	private WebElement scottishPower_gas_button;
+	
+	@FindBy (xpath = "//label[@for='gas-top-six-sse']")
+	@CacheLookup
+	private WebElement sse_gas_button;
+	
+	@FindBy (id = "gas-supplier-dropdown-control")
+	@CacheLookup
+	private WebElement dropDownGas;
+	
+	@FindBy (id = "goto-your-supplier-details")
+	@CacheLookup
+	private WebElement next_button;
+
+
 
 	/**
 	 * Verify that the current URL matches with the expected URL (found in Strings.java)
@@ -120,10 +183,10 @@ public class Supplier_page {
     	String isCheckedPresentInClass = iDontHaveMyBill_radioButton.getAttribute("class");
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
-    		log.info("I Don't Have My Bill button is already selected. Skipping step.");
+    		log.info("'I Don't Have My Bill' button is already selected. Skipping step.");
     	} else {
     	    iDontHaveMyBill_radioButton.click();
-    	    log.info("I Don't Have My Bill clicked.");
+    	    log.info("'I Don't Have My Bill' clicked.");
     	}
     return this;
     }
@@ -137,10 +200,10 @@ public class Supplier_page {
     	String isCheckedPresentInClass = iveGotMyBill_radioButton.getAttribute("class");
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
-    		log.info("I've Got My Bill button is already selected. Skipping step.");
+    		log.info("'I've Got My Bill' button is already selected. Skipping step.");
     	} else {
     	    iveGotMyBill_radioButton.click();
-    	    log.info("I've Got My Bill clicked.");
+    	    log.info("'I've Got My Bill' clicked.");
     	}
         return this;
         }
@@ -154,10 +217,10 @@ public class Supplier_page {
     	String isCheckedPresentInClass = gasAndElectricity_button.getAttribute("class");
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
-    		log.info("Gas & Electricity is already selected. Skipping step.");
+    		log.info("'Gas & Electricity' is already selected. Skipping step.");
     	} else {
     		gasAndElectricity_button.click();
-    		log.info("Gas & Electricity button clicked.");
+    		log.info("'Gas & Electricity' button clicked.");
     	}
     	return this;
     }
@@ -171,10 +234,10 @@ public class Supplier_page {
     	String isCheckedPresentInClass = electricityOnly_button.getAttribute("class");
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
-    		log.info("Electricity Only is already selected. Skipping step.");
+    		log.info("'Electricity Only' is already selected. Skipping step.");
     	} else {
     		electricityOnly_button.click();
-    		log.info("Electricity Only clicked.");
+    		log.info("'Electricity Only' clicked.");
     	}
     	return this;
     }
@@ -188,10 +251,10 @@ public class Supplier_page {
     	String isCheckedPresentInClass = gasOnly_button.getAttribute("class");
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
-    		log.info("Gas Only is already selected. Skipping step.");
+    		log.info("'Gas Only' is already selected. Skipping step.");
     	} else {
     		gasOnly_button.click();
-    		log.info("Gas Only clicked.");
+    		log.info("'Gas Only' clicked.");
     	}
     	return this;
     }
@@ -231,21 +294,315 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on British Gas button
+	 * Click on British Gas button for Electricity
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
-    public Supplier_page clickBritishGas(){
-    	String isCheckedPresentInClass = britishGas_button.getAttribute("class");
+    public Supplier_page clickBritishGasForElectricity(){
+    	String isCheckedPresentInClass = britishGas_electricity_button.getAttribute("class");
     	if (isCheckedPresentInClass.contains("checked")) {
     		log.info("'British Gas' is already selected. Skipping step.");
     	} else {
-			britishGas_button.click();
+			britishGas_electricity_button.click();
     		log.info("'British Gas' radio button clicked.");
     	}
 
     	return this;
     }
+    
+	/**
+	 * Click on EDF Energy button for Electricity
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickEDFEnergyForElectricity(){
+    	String isCheckedPresentInClass = edfEnergy_electricity_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'EDF Energy' is already selected. Skipping step.");
+    	} else {
+			edfEnergy_electricity_button.click();
+    		log.info("'EDF Energy' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click on E-ON button for Electricity.
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickEONForElectricity(){
+    	String isCheckedPresentInClass = eon_electricity_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'E-ON' is already selected. Skipping step.");
+    	} else {
+			eon_electricity_button.click();
+    		log.info("'E-ON' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click on NPOWER button for Electricity
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickNPOWERForElectricity(){
+    	String isCheckedPresentInClass = nPower_electricity_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'NPOWER' is already selected. Skipping step.");
+    	} else {
+			nPower_electricity_button.click();
+    		log.info("'NPOWER' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click on Scottish Power button for Electricity
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickScottishPowerForElectricity(){
+    	String isCheckedPresentInClass = scottishPower_electricity_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'Scottish Power' is already selected. Skipping step.");
+    	} else {
+			scottishPower_electricity_button.click();
+    		log.info("'Scottish Power' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click on SSE button for Electricity
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickSSEForElectricity(){
+    	String isCheckedPresentInClass = sse_electricity_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'SSE' is already selected. Skipping step.");
+    	} else {
+			sse_electricity_button.click();
+    		log.info("'SSE' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click and select set user value for electricity Other Supplier dropdown
+	 * 
+	 * @param otherSupplierValue
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page setElectricityOtherSupplierDropdown(String otherSupplierValue){
+    	
+    	//Click on electricity Other Supplier dropdown so it is in view.
+    	dropDownElectricity.click();
+    	
+    	//Create a List for all of the <li> elements under <div id = sel1_chosen>. Which is where all of the other suppliers are stored.
+    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='sel1_chosen']/div/ul")).findElements(By.tagName("li"));
+
+    	//Instantiate an Array to store all of the <li> elements (other suppliers) so we can refer to them later.
+    	String[] liListArray = new String[50];
+    	
+    	//Create a for loop to iterate through each <li> (other suppliers) and get the text value of it. Starting from 1.
+    	for(int i=1; i<listOfLi.size(); i++) {
+    		
+    		//Create a web element that points to specific <li> (other supplier), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
+    		WebElement liList = driver.findElement(By.xpath("//*[@id='sel1_chosen']/div/ul/li[" + i + "]"));
+    		
+    		//Get all the values of the <li> (other supplier i.e. Affect Energy etc..) and store it into a string.
+    		String eachSupplier = liList.getText();
+    		
+    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
+    		liListArray[i-1] = eachSupplier;
+    	}
+    	
+    	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
+    	int conversionArray = Arrays.asList(liListArray).indexOf(otherSupplierValue);
+    	    	
+    	//Use the index number that has been located and give it to WebElement. Click the WebElement.
+    	listOfLi.get(conversionArray).click();
+    	log.info(otherSupplierValue + " has been selected.");
+    	
+    	return this;
+    }
+    
+	/**
+	 * Click on British Gas button for Gas
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickBritishGasForGas(){
+    	String isCheckedPresentInClass = britishGas_gas_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'British Gas' is already selected. Skipping step.");
+    	} else {
+			britishGas_gas_button.click();
+    		log.info("'British Gas' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click on EDF Energy button for Gas
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickEDFEnergyForGas(){
+    	String isCheckedPresentInClass = edfEnergy_gas_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'EDF Energy' is already selected. Skipping step.");
+    	} else {
+			edfEnergy_gas_button.click();
+    		log.info("'EDF Energy' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click on E-ON button for Gas
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickEONForGas(){
+    	String isCheckedPresentInClass = eon_gas_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'E-ON' is already selected. Skipping step.");
+    	} else {
+			eon_gas_button.click();
+    		log.info("'E-ON' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click on NPOWER button for Gas
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickNPOWERForGas(){
+    	String isCheckedPresentInClass = nPower_gas_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'NPOWER' is already selected. Skipping step.");
+    	} else {
+			nPower_gas_button.click();
+    		log.info("'NPOWER' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click on Scottish Power button for Gas
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickScottishPowerForGas(){
+    	String isCheckedPresentInClass = scottishPower_gas_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'Scottish Power' is already selected. Skipping step.");
+    	} else {
+			scottishPower_gas_button.click();
+    		log.info("'Scottish Power' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click on SSE button for Gas
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page clickSSEForGas(){
+    	String isCheckedPresentInClass = sse_gas_button.getAttribute("class");
+    	if (isCheckedPresentInClass.contains("checked")) {
+    		log.info("'SSE' is already selected. Skipping step.");
+    	} else {
+			sse_gas_button.click();
+    		log.info("'SSE' radio button clicked.");
+    	}
+
+    	return this;
+    }
+    
+	/**
+	 * Click and select set user value for gas Other Supplier dropdown
+	 * 
+	 * @param otherSupplierValue
+	 * @return this Supplier_page class instance.
+	 */
+    public Supplier_page setGasOtherSupplierDropdown(String otherSupplierValue){
+    	
+    	//Click on gas Other Supplier dropdown so it is in view.
+    	dropDownGas.click();
+    	
+    	//Create a List for all of the <li> elements under <div id = sel1_chosen>. Which is where all of the other suppliers are stored.
+    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='sel2_chosen']/div/ul")).findElements(By.tagName("li"));
+
+    	//Instantiate an Array to store all of the <li> elements (other suppliers) so we can refer to them later.
+    	String[] liListArray = new String[50];
+    	
+    	//Create a for loop to iterate through each <li> (other suppliers) and get the text value of it. Starting from 1.
+    	for(int i=1; i<listOfLi.size(); i++) {
+    		
+    		//Create a web element that points to specific <li> (other supplier), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
+    		WebElement liList = driver.findElement(By.xpath("//*[@id='sel2_chosen']/div/ul/li[" + i + "]"));
+    		
+    		//Get all the values of the <li> (other supplier i.e. Affect Energy etc..) and store it into a string.
+    		String eachSupplier = liList.getText();
+    		
+    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
+    		liListArray[i-1] = eachSupplier;
+    	}
+    	
+    	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
+    	int conversionArray = Arrays.asList(liListArray).indexOf(otherSupplierValue);
+    	    	
+    	//Use the index number that has been located and give it to WebElement. Click the WebElement.
+    	listOfLi.get(conversionArray).click();
+    	log.info(otherSupplierValue + " has been selected.");
+    	
+    	return this;
+    }
+    
+	/**
+	 * Click on Next Button.
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+	public Supplier_page clickNextButton() {
+		next_button.click();
+		log.info("Next button has been clicked.");
+		return this;
+	}
+	
+	/**
+	 * Verify that the current URL matches with the expected URL (found in Strings.java)
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+	public Supplier_page verifyUserIsOnYourEnergyPage(){
+		wait = new WebDriverWait(driver, timeout);
+		if (wait.until(ExpectedConditions.urlToBe(Strings.yourEnergyURL)) == true){
+			log.info("Page URL matches with expected Your Energy URL. User is successfully on the Your Energy page.");
+		}
+		return this;
+		
+	}
+	
+    
 
 	/**
 	 * Constructor required for PageFactory with implicitWaits to poll DOM
