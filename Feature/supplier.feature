@@ -1,24 +1,4 @@
 #Author: Zukky Baig | Zukky@hotmail.co.uk
-#Keywords Summary :
-#Feature: List of scenarios.
-#Scenario: Business rule through list of steps with arguments.
-#Given: Some precondition step
-#When: Some key actions
-#Then: To observe outcomes or validation
-#And,But: To enumerate more Given,When,Then steps
-#Scenario Outline: List of steps for data-driven as an Examples and <placeholder>
-#Examples: Container for s table
-#Background: List of steps run before each of the scenarios
-#""" (Doc Strings)
-#| (Data Tables)
-#@ (Tags/Labels):To group Scenarios 
-#<> (placeholder)
-#""
-## (Comments)
-
-#Sample Feature Definition Template
-
-
 
 Feature: CTM Energy User Journey for Duel Tariff Purchase
 As a user of Compare The Market Energy website
@@ -40,8 +20,5 @@ And I click on EDF Energy as my gas supplier
 When I click Next to continue
 Then I should move successfully onto Your Energy page
 
-@compareGasOnly
-
-@compareElectricityOnly
 
 

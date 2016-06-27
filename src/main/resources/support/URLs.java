@@ -7,6 +7,7 @@ public class URLs {
 	public static final String yourEnergyWithBillURL = "https://energy.comparethemarket.com/energy/v2/yourEnergy";
 	public static final String yourEnergyNoBillURL = "https://energy.comparethemarket.com/energy/v2/yourEnergyNoBill";
 	public static final String yourPreferencesURL = "https://energy.comparethemarket.com/energy/v2/yourDetails";
+	public static final String yourResultsURL = "https://energy.comparethemarket.com/energy/Results/YourResults";
 	
 	public String URLcheck = null;
 

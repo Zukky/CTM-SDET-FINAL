@@ -152,7 +152,7 @@ public class Supplier_page {
 
 
 	/**
-	 * Verify that the current URL matches with the expected URL (found in Strings.java)
+	 * Verify that the current URL matches with the expected URL (URLs.java).
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -166,7 +166,7 @@ public class Supplier_page {
 	}
 	
 	/**
-	 * Set value to What Is Your Postcode text field.
+	 * Set text to "What is your postcode?" textbox.
 	 * 
 	 * @param whatIsYourPostcodeValue
 	 * @return this Supplier_page class instance.
@@ -180,7 +180,7 @@ public class Supplier_page {
 	}
 	
 	/**
-	 * Click on Find Postcode Button.
+	 * Click on "Find Postcode" button.
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -198,7 +198,7 @@ public class Supplier_page {
 	}
 	
 	/**
-	 * Click on I Don't Have My Bill button. 
+	 * Click on "I Don't Have My Bill" button for "Do you have your bill handy?". 
 	 * 
 	 * Set URLchecker value to "https:/~/v2/yourEnergyNoBill"
 	 * @return this Supplier_page class instance.
@@ -222,7 +222,7 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on I've Got My Bill button
+	 * Click on "I've Got My Bill" button for "Do you have your bill handy?".
 	 * 
 	 * Set URLchecker value to "https:/~/v2/yourEnergy"
 	 * @return this Supplier_page class instance.
@@ -247,7 +247,7 @@ public class Supplier_page {
         }
     
 	/**
-	 * Click on Gas & Electricity button
+	 * Click on "Gas & Electricity" button for "What do you want to compare?"
 	 * 
 	 * @return this Supplier_page class instance.
 	 */	
@@ -264,7 +264,7 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on Electricity Only button
+	 * Click on "Electricity Only" button for "What do you want to compare?"
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -281,7 +281,7 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on Gas Only button
+	 * Click on "Gas Only" button for "What do you want to compare?"
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -298,7 +298,7 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on Yes they are from the same supplier checkbox
+	 * Click Yes for "Is your gas & electricity from the same supplier?"
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -314,7 +314,7 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on No they are not from the same supplier checkbox
+	 * Click No for "Is your gas & electricity from the same supplier?"
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -330,8 +330,14 @@ public class Supplier_page {
     	return this;
     }
     
+    /*
+     * If "Is your gas & electricity from the same supplier" is clicked as "No" then use these methods 
+     * for next steps of journey.
+     */
 	/**
-	 * Click on British Gas button for Electricity
+	 * Click on "British Gas" button for "Who supplies your electricity?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -348,7 +354,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on EDF Energy button for Electricity
+	 * Click on "EDF Energy" button for "Who supplies your electricity?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -365,7 +373,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on E-ON button for Electricity.
+	 * Click on "E-ON" button for "Who supplies your electricity?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -382,7 +392,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on NPOWER button for Electricity
+	 * Click on "NPOWER" button for "Who supplies your electricity?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -399,7 +411,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on Scottish Power button for Electricity
+	 * Click on "Scottish Power" button for "Who supplies your electricity?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -416,7 +430,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on SSE button for Electricity
+	 * Click on "SSE" button for "Who supplies your electricity?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -433,12 +449,14 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click Electricity Other Supplier dropdown value
+	 * Click and set "Who supplies your electricity?" dropdown box
 	 * 
-	 * @param otherSupplierValue
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
+	 * 
+	 * @param dropdownValue
 	 * @return this Supplier_page class instance.
 	 */
-    public Supplier_page setElectricityOtherSupplierDropdown(String otherSupplierValue){
+    public Supplier_page setElectricityOtherSupplierDropdown(String dropdownValue){
     	
     	//Click on electricity Other Supplier dropdown so it is in view.
     	dropDownElectricity.click();
@@ -450,7 +468,7 @@ public class Supplier_page {
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (other suppliers) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (other supplier), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='sel1_chosen']/div/ul/li[" + i + "]"));
@@ -464,16 +482,16 @@ public class Supplier_page {
     	
     	try {
         	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-        	int conversionArray = Arrays.asList(liListArray).indexOf(otherSupplierValue);
+        	int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
         	
         	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
         	if (conversionArray < 0) {
-        		log.info(otherSupplierValue + " is not found! Please write a value that exists!");
+        		log.info(dropdownValue + " is not found! Please write a value that exists!");
         		Assert.fail();
         	} else {
             	//Use the index number that has been located and give it to WebElement. Click the WebElement.
             	listOfLi.get(conversionArray).click();
-            	log.info(otherSupplierValue + " has been selected.");
+            	log.info(dropdownValue + " has been selected.");
         	}
     	}
     	 catch (ArrayIndexOutOfBoundsException e) {
@@ -483,7 +501,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on British Gas button for Gas
+	 * Click on "British Gas" button for "Who supplies your gas?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -500,7 +520,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on EDF Energy button for Gas
+	 * Click on "EDF Energy" button for "Who supplies your gas?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -517,7 +539,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on E-ON button for Gas
+	 * Click on "E-ON" button for "Who supplies your gas?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -534,7 +558,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on NPOWER button for Gas
+	 * Click on "NPOWER" button for "Who supplies your gas?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -551,7 +577,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on Scottish Power button for Gas
+	 * Click on "Scottish Power" button for "Who supplies your gas?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -568,7 +596,9 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click on SSE button for Gas
+	 * Click on "SSE" button for "Who supplies your gas?"
+	 * 
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -585,12 +615,14 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click Gas Other Supplier dropdown value
+	 * Click and set "Who supplies your gas?" dropdown box
 	 * 
-	 * @param otherSupplierValue
+	 * Pre-requisite: Only use if "Is your gas & electricity from the same supplier" is clicked as "No".
+	 * 
+	 * @param dropdownValue
 	 * @return this Supplier_page class instance.
 	 */
-    public Supplier_page setGasOtherSupplierDropdown(String otherSupplierValue){
+    public Supplier_page setGasOtherSupplierDropdown(String dropdownValue){
     	
     	//Click on gas Other Supplier dropdown so it is in view.
     	dropDownGas.click();
@@ -602,7 +634,7 @@ public class Supplier_page {
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (other suppliers) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (other supplier), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='sel2_chosen']/div/ul/li[" + i + "]"));
@@ -616,16 +648,16 @@ public class Supplier_page {
     	
     	try {
         	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-        	int conversionArray = Arrays.asList(liListArray).indexOf(otherSupplierValue);
+        	int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
         	
            	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.	
         	if (conversionArray < 0) {
-        		log.info(otherSupplierValue + " is not found! Please write a value that exists!");
+        		log.info(dropdownValue + " is not found! Please write a value that exists!");
         		Assert.fail();
         	} else {
             	//Use the index number that has been located and give it to WebElement. Click the WebElement.
             	listOfLi.get(conversionArray).click();
-            	log.info(otherSupplierValue + " has been selected.");
+            	log.info(dropdownValue + " has been selected.");
         	}
     	}
     	 catch (ArrayIndexOutOfBoundsException e) {
@@ -648,14 +680,17 @@ public class Supplier_page {
 	}
 	
 	/**
-	 * Verify user is on the correct next page (Energy Page With Bill or Without Bill)
+	 * Verify user is on the correct next "Your Energy" page 
+	 * 
+	 * IF user selected on "Do you have your bill handy?" as "I've got my bill" THEN check if they are on the YourEnergyWithBillURL.
+	 * IF user selected on "Do you have your bill handy?" as "I don't have my bill" THEN check if they are on the YourEnergyNoBillURL.
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
 	public Supplier_page verifyUserIsOnCorrectYourEnergyPage(){
 		wait = new WebDriverWait(driver, timeout);
  
-		log.info("Verifying if user is on the correct page...");
+		log.info("Verifying if user is on the correct Energy page...");
 		wait.until(ExpectedConditions.urlToBe(stringClass.URLcheck)); 
 		log.info("Page URL expected: " + stringClass.URLcheck + "\nActual: " + driver.getCurrentUrl() + "\nSuccess! User is successfully on the correct Your Energy page.");
 		return this;

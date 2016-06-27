@@ -228,17 +228,19 @@ public class Energy_page {
 	
 	/* *
 	 * 
-	 * Methods for "Your Energy" page, "I've got my bill" is checked (and from the same supplier - this doesn't matter)
+	 * Methods for "Your Energy" page, "I've got my bill" is checked.
 	 * 
 	 */
 	
     /**
-	 * Click Electricity Tariff dropdown value
+	 * Click and set "What electricity tariff are you on?" dropdown box
+	 * 
+	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 * 
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */
-	public Energy_page setElectricityTariff(String dropdownValue){
+	public Energy_page setElectricityTariffDropdown(String dropdownValue){
     	//Click on dropdown so it is in view.
 		electricityTariff_dropdown.click();
     	
@@ -249,7 +251,7 @@ public class Energy_page {
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='electricity_tariff_additional_info_chosen']/div/ul/li[" + i + "]"));
@@ -281,7 +283,9 @@ public class Energy_page {
 	}
 	
     /**
-	 * Click Yes for Economy 7 Meter
+	 * Click Yes for "Do you have an Economy 7 meter?"
+	 *
+	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */
@@ -304,7 +308,9 @@ public class Energy_page {
 	}
 	
     /**
-	 * Click No for Economy 7 Meter
+	 * Click No for "Do you have an Economy 7 meter?"
+	 *
+	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
@@ -327,7 +333,9 @@ public class Energy_page {
 	}
 	
     /**
-	 * Click 'How do you pay for your electricity' dropdown value
+	 * Click and set "How do you pay for your electricity" dropdown box
+	 * 
+	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 * 
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
@@ -343,7 +351,7 @@ public class Energy_page {
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='electricity_payment_method_dropdown_link_chosen']/div/ul/li[" + i + "]"));
@@ -378,7 +386,9 @@ public class Energy_page {
 	}
 
     /**
-	 * Click Yes for Electricity for main source of heating
+	 * Click Yes for "Is electricity your main source of heating?"
+	 * 
+	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
@@ -401,7 +411,9 @@ public class Energy_page {
 	}
 	
     /**
-	 * Click No for Electricity for main source of heating
+	 * Click No for "Is electricity your main source of heating?"
+	 * 
+	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
@@ -424,7 +436,9 @@ public class Energy_page {
 	}
 	
     /**
-	 * Click kWh for current electricity usage type
+	 * Click kWh for "What is your current electricity usage"?
+	 * 
+	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
@@ -441,13 +455,16 @@ public class Energy_page {
     	} else {
     		kwh_radioButton.click();
     		log.info("'kWh' radio button clicked. Users current electricity usage type is 'kWh'");
+    		
     	}
 		return this;
 
 	}
 	
     /**
-	 * Click £ for current electricity usage type
+	 * Click £ for "What is your current electricity usage"?
+	 * 
+	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
@@ -470,8 +487,13 @@ public class Energy_page {
 	}
 	
     /**
-	 * Set current Electricity Used text for kWh (Economy 7 is NOT checked)
-	 *
+	 * Set kWh text for "What is your current electricity usage?"
+	 * (Economy 7 is NOT checked)
+	 * 
+	 * Pre-requisites: ONLY USE
+	 * 1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * 2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
+	 * 
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page setKwHText_Eco7NotClicked(int value) {
@@ -487,7 +509,12 @@ public class Energy_page {
 	}
 	
     /**
-	 * Click current electricity usage dropdown value for kWh (Economy 7 is NOT checked)
+	 * Click and set kWh dropdown box for "What is your current electricity usage?"
+	 * (Economy 7 is NOT checked)
+	 * 
+	 * Pre-requisites: ONLY USE
+	 * 1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * 2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
@@ -503,7 +530,7 @@ public class Energy_page {
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='electricity_usage_dropdown_chosen']/div/ul/li[" + i + "]"));
@@ -538,7 +565,12 @@ public class Energy_page {
 	}
 	
     /**
-	 * Set current Electricity Used text for £ (Economy 7 is NOT checked)
+	 * Set £ text for "What is your current electricity usage?"
+	 * (Economy 7 is NOT checked)
+	 * 
+	 * Pre-requisites: ONLY USE
+	 * 1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * 2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
@@ -549,13 +581,19 @@ public class Energy_page {
 
 		electricityUsageForPound_textbox.clear();
 		electricityUsageForPound_textbox.sendKeys(""+value);
+	
 		log.info("£: " + value + " has successfully been entered into £ textbox.");
 		return this;
 
 	}
 	
-	/**
-	 * Click current electricity usage dropdown value for £ (Economy 7 is NOT checked)
+    /**
+	 * Click and set £ dropdown box for "What is your current electricity usage?"
+	 * (Economy 7 is NOT checked)
+	 * 
+	 * Pre-requisites: ONLY USE
+	 * 1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * 2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
@@ -566,12 +604,12 @@ public class Energy_page {
     	
     	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
     	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='electricity_spend_dropdown_chosen']/div/ul")).findElements(By.tagName("li"));
-
+    	
     	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='electricity_spend_dropdown_chosen']/div/ul/li[" + i + "]"));
@@ -583,13 +621,14 @@ public class Energy_page {
     		liListArray[i-1] = eachValue;
     	}
     	
-
     	try {
+    		
         	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
     		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-        	
+        	//log.info(conversionArray);
+    		
            	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-        	if (conversionArray == -1){
+        	if (conversionArray < 0){
         		log.info(dropdownValue + " is not found! Please write a value that exists!");
         		Assert.fail();
         		
@@ -606,7 +645,11 @@ public class Energy_page {
 	}
 	
 	/**
-	 * Click Date picker and set day for bill date
+	 *  Click Date picker and set day for bill date for Electricity (You can use this if kWh OR £ OR Economy 7 is selected, can be used for both).
+	 * 
+	 * Pre-requisites: ONLY USE
+	 * 1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * 2) If on Energy Page, dropdown boxes for "kWh" OR "£" OR "Economy 7" are NOT set to Annually
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
@@ -625,8 +668,10 @@ public class Energy_page {
 				dates.get(i).click();
 				break;
 			}
+			
 
 		}
+		billDate_datepicker.click();
 		return this;
 
 	}
@@ -637,7 +682,9 @@ public class Energy_page {
 	 */
 	
     /**
-	 * Set value to Electricity used (Economy 7) day in kWh
+	 * Set text to "Electricity used (Economy 7) day in kWh"
+	 * 
+	 * Pre-requisite: Only use if "Do you have an Economy 7 meter?" is checked to "Yes".
 	 *
 	 * @param value
 	 * @return this Energy_page class instance.
@@ -655,7 +702,9 @@ public class Energy_page {
 	}
 	
     /**
-	 * Set value to Electricity used (Economy 7) night in kWh
+	 * Set text to "Electricity used (Economy 7) night in kWh"
+	 * 
+	 * Pre-requisite: Only use if "Do you have an Economy 7 meter?" is checked to "Yes".
 	 *
 	 * @param value
 	 * @return this Energy_page class instance.
@@ -673,7 +722,9 @@ public class Energy_page {
 	}
 	
 	/**
-	 * Click electricity used (economy 7) day in kWh dropdown value
+	 * Click and set "electricity used (economy 7) day in kWh" dropdown box
+	 * 
+	 * Pre-requisite: Only use if "Do you have an Economy 7 meter?" is checked to "Yes".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
@@ -689,7 +740,7 @@ public class Energy_page {
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='economy_7_day_usage_dropdown_chosen']/div/ul/li[" + i + "]"));
@@ -729,7 +780,9 @@ public class Energy_page {
     *
     */
     /**
-	 * Click Yes for Prepayment Meter
+	 * Click Yes for "Do you use a pre-payment meter?"
+	 *
+	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
@@ -752,7 +805,9 @@ public class Energy_page {
 	}
 	
     /**
-	 * Click No for Prepayment Meter
+	 * Click No for "Do you use a pre-payment meter?"
+	 * 
+	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
@@ -774,7 +829,9 @@ public class Energy_page {
 	}
 	
     /**
-	 * Set value to How Much Do You Currently Spend on Electricity
+	 * Set text to "How much do you currently spend on electricity?"
+	 * 
+	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @param value
 	 * @return this Energy_page class instance.
@@ -792,7 +849,9 @@ public class Energy_page {
 	}
 	
 	/**
-	 * Click How Much Do You Currently Spend On Electricity dropdown value
+	 * Click and set "How much do you currently spend on electricity?" dropdown box
+	 * 
+	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
@@ -808,7 +867,7 @@ public class Energy_page {
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='electricity_current_spend_period_chosen']/div/ul/li[" + i + "]"));
@@ -843,7 +902,9 @@ public class Energy_page {
 	}
 	
 	/**
-	 * Set value to How Much Do You Currently Spend on Gas
+	 * Set text to "How much do you currently spend on gas?"
+	 * 
+	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @param value
 	 * @return this Energy_page class instance.
@@ -861,7 +922,9 @@ public class Energy_page {
 	}
 	
 	/**
-	 * Click How Much Do You Currently Spend On Gas dropdown value
+	 * Click and set "How much do you currently spend on gas?" dropdown box
+	 * 
+	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
@@ -877,7 +940,7 @@ public class Energy_page {
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='gas_current_spend_period_chosen']/div/ul/li[" + i + "]"));
@@ -918,7 +981,9 @@ public class Energy_page {
     */
 	
 	/**
-	 * Click "What Gas Tariff Are You On?" dropdown value
+	 * Click and set "What gas tariff are you on?" dropdown box
+	 * 
+	 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
@@ -934,7 +999,7 @@ public class Energy_page {
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='gas_tariff_additional_info_chosen']/div/ul/li[" + i + "]"));
@@ -969,7 +1034,9 @@ public class Energy_page {
 	}
 	
 	/**
-	 * Click "How Do You Pay For Your Gas?" dropdown value
+	 * Click "How do you pay for your gas?" dropdown box
+	 * 
+	 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
@@ -985,7 +1052,7 @@ public class Energy_page {
     	String[] liListArray = new String[listOfLi.size()];
     	
     	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<listOfLi.size(); i++) {
+    	for(int i=1; i<=listOfLi.size(); i++) {
     		
     		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
     		WebElement liList = driver.findElement(By.xpath("//*[@id='gas_payment_method_dropdown_link_chosen']/div/ul/li[" + i + "]"));
@@ -1021,7 +1088,9 @@ public class Energy_page {
 	
 	
 	  /**
-		 * Click Yes for Gas for main source of heating
+		 * Click Yes for "Is gas your main source of heating?"
+		 * 
+		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @return this Energy_page class instance.
 		 */	
@@ -1045,7 +1114,9 @@ public class Energy_page {
 		
 
 	    /**
-		 * Click No for Gas for main source of heating
+		 * Click No for "Is gas your main source of heating?"
+		 * 
+		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @return this Energy_page class instance.
 		 */	
@@ -1068,7 +1139,9 @@ public class Energy_page {
 		}
 		
 		/**
-		 * Click kWh for current gas usage type
+		 * Click kWh for "What is your current gas usage?"
+		 * 
+		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @return this Energy_page class instance.
 		 */	
@@ -1091,7 +1164,9 @@ public class Energy_page {
 		}
 		
 	    /**
-		 * Click £ for current gas usage type
+		 * Click £ for "What is your current gas usage?"
+		 * 
+		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @return this Energy_page class instance.
 		 */	
@@ -1114,7 +1189,9 @@ public class Energy_page {
 		}
 		
 	    /**
-		 * Set current gas text for kWh
+		 * Set text for "What is your current gas usage?" when kWh is clicked.
+		 * 
+		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @return this Energy_page class instance.
 		 */	
@@ -1131,7 +1208,9 @@ public class Energy_page {
 		}
 		
 	    /**
-		 * Click current gas usage dropdown value for kWh 
+		 * Click and set "What is your current gas usage?" dropdown box for kWh.
+		 * 
+		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @param dropdownValue
 		 * @return this Energy_page class instance.
@@ -1147,7 +1226,7 @@ public class Energy_page {
 	    	String[] liListArray = new String[listOfLi.size()];
 	    	
 	    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-	    	for(int i=1; i<listOfLi.size(); i++) {
+	    	for(int i=1; i<=listOfLi.size(); i++) {
 	    		
 	    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
 	    		WebElement liList = driver.findElement(By.xpath("//*[@id='type_of_Gas_bill_usage_dropdown_chosen']/div/ul/li[" + i + "]"));
@@ -1182,7 +1261,7 @@ public class Energy_page {
 		}
 		
 		 /**
-		 * Set current Gas usage text for £
+		 * Set text for "What is your current gas usage?" when £ is clicked.
 		 *
 		 * @return this Energy_page class instance.
 		 */	
@@ -1193,13 +1272,16 @@ public class Energy_page {
 
 			gasSpend_textbox.clear();
 			gasSpend_textbox.sendKeys(""+value);
+			gasSpend_textbox.click();
 			log.info("£: " + value + " has successfully been entered into £ textbox.");
 			return this;
 
 		}
 		
 		/**
-		 * Click current gas usage dropdown value for £ 
+		 * Click and set "What is your current gas usage?" dropdown box for £
+		 * 
+		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @param dropdownValue
 		 * @return this Energy_page class instance.
@@ -1215,7 +1297,7 @@ public class Energy_page {
 	    	String[] liListArray = new String[listOfLi.size()];
 	    	
 	    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-	    	for(int i=1; i<listOfLi.size(); i++) {
+	    	for(int i=1; i<=listOfLi.size(); i++) {
 	    		
 	    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
 	    		WebElement liList = driver.findElement(By.xpath("//*[@id='type_of_Gas_bill_dropdown_chosen']/div/ul/li[" + i + "]"));
@@ -1250,7 +1332,9 @@ public class Energy_page {
 		}
 		
 		/**
-		 * Click Date picker and set day for bill date for Gas
+		 * Click Date picker and set day for bill date for Gas (if kWh or £ is selected, can be used for both).
+		 * 
+		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @param dropdownValue
 		 * @return this Energy_page class instance.
@@ -1269,10 +1353,11 @@ public class Energy_page {
 					dates.get(i).click();
 					break;
 				}
+				
 
 			}
+			
 			return this;
-
 		}	
 		
 	/* *
@@ -1334,10 +1419,10 @@ public class Energy_page {
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
-	public Energy_page verifyUserIsOnCorrectYourPreferencesPage(){
+	public Energy_page verifyUserIsOnYourPreferencesPage(){
 		wait = new WebDriverWait(driver, timeout);
  
-		log.info("Verifying if user is on the correct page...");
+		log.info("Verifying if user is on Your Preferences page...");
 		wait.until(ExpectedConditions.urlToBe(URLs.yourPreferencesURL)); 
 		log.info("Page URL expected: " + URLs.yourPreferencesURL + "\nActual: " + driver.getCurrentUrl() + "\nSuccess! User is successfully on the correct Your Preferences page.");
 		return this;

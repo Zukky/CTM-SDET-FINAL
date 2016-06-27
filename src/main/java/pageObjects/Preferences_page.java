@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import support.URLs;
+
 public class Preferences_page {
 	private static Logger log = LogManager.getLogger(Preferences_page.class);
 	private WebDriver driver;
@@ -68,7 +70,7 @@ public class Preferences_page {
 	
 	
 	/**
-	 * Click on Fixed Tariff for "What tariff are you interested in?"
+	 * Click on "Fixed Tariff" button for "What tariff are you interested in?"
 	 * 
 	 * @return this Preferences_page class instance.
 	 */
@@ -85,7 +87,7 @@ public class Preferences_page {
     }
 	
 	/**
-	 * Click on Variable Tariff for "What tariff are you interested in?"
+	 * Click on "Variable Tariff" button for "What tariff are you interested in?"
 	 * 
 	 * @return this Preferences_page class instance.
 	 */
@@ -101,7 +103,7 @@ public class Preferences_page {
     	return this;
     }
 	/**
-	 * Click on All Tariffs for "What tariff are you interested in?"
+	 * Click on "All Tariffs" button for "What tariff are you interested in?"
 	 * 
 	 * @return this Preferences_page class instance.
 	 */
@@ -118,7 +120,7 @@ public class Preferences_page {
     }
     
 	/**
-	 * Click on Monthly Direct Debit for "What payment type are you interested in?"
+	 * Click on "Monthly Direct Debit" button for "What payment type are you interested in?"
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
@@ -135,7 +137,7 @@ public class Preferences_page {
     }
     
 	/**
-	 * Click on Quarterly Direct Debit for "What payment type are you interested in?"
+	 * Click on "Quarterly Direct Debit" button for "What payment type are you interested in?"
 	 * 
 	 * @return this Preferences_page class instance.
 	 */
@@ -152,7 +154,7 @@ public class Preferences_page {
     }    
 	
 	/**
-	 * Click on Pay On Receipt Of Bill for "What payment type are you interested in?"
+	 * Click on "Pay On Receipt Of Bill" button for "What payment type are you interested in?"
 	 * 
 	 * @return this Preferences_page class instance.
 	 */
@@ -169,7 +171,7 @@ public class Preferences_page {
     }
     
 	/**
-	 * Click on All Payment Types for "What payment type are you interested in?"
+	 * Click on "All Payment Types" button for "What payment type are you interested in?"
 	 * 
 	 * @return this Preferences_page class instance.
 	 */
@@ -185,7 +187,7 @@ public class Preferences_page {
     }
 	
 	/**
-	 * Set value to "What is your email address?"
+	 * Set text to "What is your email address?" textbox.
 	 * 
 	 * @param emailValue
 	 * @return this Preferences_page class instance.
@@ -199,7 +201,7 @@ public class Preferences_page {
 	}
 	
     /**
-	 * Click "I agree to receiving product and marketing information" checkbox
+	 * Click "I agree to receiving product and marketing information" checkbox.
 	 *
 	 * @return this Preferences_page class instance.
 	 */	
@@ -222,7 +224,7 @@ public class Preferences_page {
 	}
 	
     /**
-	 * Click "Please tick this box to confirm you have read the Terms & Conditions" checkbox
+	 * Click "Please tick this box to confirm you have read the Terms & Conditions" checkbox.
 	 *
 	 * @return this Preferences_page class instance.
 	 */	
@@ -245,7 +247,7 @@ public class Preferences_page {
 	}
 	
     /**
-	 * Click Go To Prices button
+	 * Click "Go To Prices" button.
 	 *
 	 * @return this Preferences_page class instance.
 	 */	
@@ -274,6 +276,20 @@ public class Preferences_page {
 		log.info("'back' button has been clicked.");
 		return this;
 
+	}
+	
+	/**
+	 * Verify user is on the correct next page (Your Preferences page -> Your Results page)
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+	public Preferences_page verifyUserIsOnYourResultsPage(){
+		wait = new WebDriverWait(driver, timeout);
+ 
+		log.info("Verifying if user is on Your Results page...");
+		wait.until(ExpectedConditions.urlToBe(URLs.yourResultsURL)); 
+		log.info("Page URL expected: " + URLs.yourResultsURL + "\nActual: " + driver.getCurrentUrl() + "\nSuccess! User is successfully on the correct Your Results page.");
+		return this;
 	}
 	
 	
