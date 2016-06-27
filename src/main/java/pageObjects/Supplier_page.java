@@ -14,6 +14,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import org.junit.Assert;
 import support.Strings;
 
 public class Supplier_page {
@@ -22,7 +23,7 @@ public class Supplier_page {
 	private WebDriver driver;
 	private WebDriverWait wait;
 	private int timeout = 20;
-	
+	Strings stringClass = new Strings();
 
     @FindBy(id = "your-postcode")
     @CacheLookup
@@ -59,6 +60,30 @@ public class Supplier_page {
 	@FindBy (xpath = "//label[@for='same-supplier-no']")
 	@CacheLookup
 	private WebElement notFromSameSupplier_radioButton;
+	
+	@FindBy (xpath = "//label[@for='dual-top-six-british-gas']")
+	@CacheLookup
+	private WebElement britishGas_duel_button;
+	
+	@FindBy (xpath = "//label[@for='dual-top-six-edf']")
+	@CacheLookup
+	private WebElement edfEnergy_duel_button;
+	
+	@FindBy (xpath = "//label[@for='dual-top-six-eon']")
+	@CacheLookup
+	private WebElement eon_duel_button;
+	
+	@FindBy (xpath = "//label[@for='dual-top-six-npower']")
+	@CacheLookup
+	private WebElement npower_duel_button;
+	
+	@FindBy (xpath = "//label[@for='dual-top-six-scottish-power']")
+	@CacheLookup
+	private WebElement scottishPower_duel_button;
+	
+	@FindBy (xpath = "//label[@for='dual-top-six-sse']")
+	@CacheLookup
+	private WebElement sse_duel_button;
 	
 	@FindBy (xpath = "//label[@for='electricity-top-six-british-gas']")
 	@CacheLookup
@@ -173,8 +198,9 @@ public class Supplier_page {
 	}
 	
 	/**
-	 * Click on I Don't Have My Bill button
+	 * Click on I Don't Have My Bill button. 
 	 * 
+	 * Set URLchecker value to "https:/~/v2/yourEnergyNoBill"
 	 * @return this Supplier_page class instance.
 	 */
     public Supplier_page clickIDontHaveMyBill(){
@@ -182,9 +208,15 @@ public class Supplier_page {
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
     		log.info("'I Don't Have My Bill' button is already selected. Skipping step.");
+    		
+    	    stringClass.setURLtoYourEnergyNoBill();
+    	    log.info("URL has been set to check for " + stringClass.URLcheck);
     	} else {
     	    iDontHaveMyBill_radioButton.click();
     	    log.info("'I Don't Have My Bill' clicked.");
+    	    
+    	    stringClass.setURLtoYourEnergyNoBill();
+    	    log.info("URL has been set to check for " + stringClass.URLcheck);
     	}
     return this;
     }
@@ -192,6 +224,7 @@ public class Supplier_page {
 	/**
 	 * Click on I've Got My Bill button
 	 * 
+	 * Set URLchecker value to "https:/~/v2/yourEnergy"
 	 * @return this Supplier_page class instance.
 	 */
     public Supplier_page clickIveGotMyBill(){
@@ -199,10 +232,17 @@ public class Supplier_page {
     	
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
     		log.info("'I've Got My Bill' button is already selected. Skipping step.");
+    		
+    	    stringClass.setURLtoYourEnergyWithBill();
+    	    log.info("URL has been set to check for " + stringClass.URLcheck);
     	} else {
     	    iveGotMyBill_radioButton.click();
     	    log.info("'I've Got My Bill' clicked.");
+    	    
+    	    stringClass.setURLtoYourEnergyWithBill();
+    	    log.info("URL has been set to check for " + stringClass.URLcheck);
     	}
+    	
         return this;
         }
     
@@ -264,7 +304,6 @@ public class Supplier_page {
 	 */
     public Supplier_page clickYesForGasAndElectricitySuppliers(){
     	String isCheckedPresentInClass = yesTheyAreFromSameSupplier_radioButton.getAttribute("class");
-    	log.info(isCheckedPresentInClass);
     	if (isCheckedPresentInClass.equalsIgnoreCase("checked")) {
     		log.info("'Yes' radio button is already selected. Skipping step.");
     	} else {
@@ -394,7 +433,7 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click and select set user value for electricity Other Supplier dropdown
+	 * Click Electricity Other Supplier dropdown value
 	 * 
 	 * @param otherSupplierValue
 	 * @return this Supplier_page class instance.
@@ -430,6 +469,7 @@ public class Supplier_page {
         	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
         	if (conversionArray < 0) {
         		log.info(otherSupplierValue + " is not found! Please write a value that exists!");
+        		Assert.fail();
         	} else {
             	//Use the index number that has been located and give it to WebElement. Click the WebElement.
             	listOfLi.get(conversionArray).click();
@@ -545,7 +585,7 @@ public class Supplier_page {
     }
     
 	/**
-	 * Click and select set user value for gas Other Supplier dropdown
+	 * Click Gas Other Supplier dropdown value
 	 * 
 	 * @param otherSupplierValue
 	 * @return this Supplier_page class instance.
@@ -574,14 +614,14 @@ public class Supplier_page {
     		liListArray[i-1] = eachSupplier;
     	}
     	
-
     	try {
         	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
         	int conversionArray = Arrays.asList(liListArray).indexOf(otherSupplierValue);
         	
-           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
+           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.	
         	if (conversionArray < 0) {
         		log.info(otherSupplierValue + " is not found! Please write a value that exists!");
+        		Assert.fail();
         	} else {
             	//Use the index number that has been located and give it to WebElement. Click the WebElement.
             	listOfLi.get(conversionArray).click();
@@ -600,27 +640,27 @@ public class Supplier_page {
 	 * @return this Supplier_page class instance.
 	 */
 	public Supplier_page clickNextButton() {
+		wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOf(next_button));
 		next_button.click();
 		log.info("Next button has been clicked.");
 		return this;
 	}
 	
 	/**
-	 * Verify that the current URL matches with the expected URL (found in Strings.java)
+	 * Verify user is on the correct next page (Energy Page With Bill or Without Bill)
 	 * 
 	 * @return this Supplier_page class instance.
 	 */
-	public Supplier_page verifyUserIsOnYourEnergyPage(){
+	public Supplier_page verifyUserIsOnCorrectYourEnergyPage(){
 		wait = new WebDriverWait(driver, timeout);
-		if (wait.until(ExpectedConditions.urlToBe(Strings.yourEnergyURL)) == true){
-			log.info("Page URL matches with expected Your Energy URL. User is successfully on the Your Energy page.");
-		}
+ 
+		log.info("Verifying if user is on the correct page...");
+		wait.until(ExpectedConditions.urlToBe(stringClass.URLcheck)); 
+		log.info("Page URL expected: " + stringClass.URLcheck + "\nActual: " + driver.getCurrentUrl() + "\nSuccess! User is successfully on the correct Your Energy page.");
 		return this;
-		
 	}
 	
-    
-
 	/**
 	 * Constructor required for PageFactory with implicitWaits to poll DOM
 	 * 
@@ -629,7 +669,5 @@ public class Supplier_page {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		this.driver = driver;
-	}
-
-	
+	}	
 }

@@ -9,6 +9,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import pageObjects.Energy_page;
 import pageObjects.Supplier_page;
 import support.Strings;
 
@@ -17,6 +18,7 @@ public class StepDefinitions {
 	
 	private WebDriver driver;
 	private Supplier_page supplierPage;
+	private Energy_page energyPage;
 @Before
 public void Setup(){
 	//remember to externalise these into a strings class
@@ -25,11 +27,16 @@ public void Setup(){
 	//driver.manage().window().maximize();
 	driver.get(Strings.baseURL);
 	supplierPage = PageFactory.initElements(driver, Supplier_page.class);
+	energyPage = PageFactory.initElements(driver, Energy_page.class);
 }
 
 @After
 public void tearDown(){
-	
+
+	/*
+	 * Supplier Page stepdefinitions
+	 * 
+	 */
 }
 @Given("^I am successfully on Your Supplier page$")
 public void i_am_on_your_supplier_page() {
@@ -49,7 +56,7 @@ public void i_click_on_find_postcode() throws Throwable {
 
 @Given("^I do have my energy bill$")
 public void i_do_have_my_energy_bill() throws Throwable {
-	supplierPage.clickIveGotMyBill();
+	supplierPage.clickIDontHaveMyBill();
 }
 @Given("^I want to compare Gas & Electricity prices$")
 public void i_want_to_compare_Gas_and_Electricity_prices() throws Throwable {
@@ -62,7 +69,7 @@ public void i_have_different_gas_and_electricity_suppliers() throws Throwable {
 
 @Given("^I click on British Gas as my electricity supplier$")
 public void i_click_on_British_Gas_as_my_electricity_supplier() throws Throwable {
-	supplierPage.clickBritishGasForElectricity();
+	supplierPage.clickEDFEnergyForElectricity();
 
 }
 @Given("^I click on the electricity other supplier dropdown and select \"([^\"]*)\"$")
@@ -71,7 +78,7 @@ public void i_click_on_the_electricity_other_supplier_dropdown_and_select(String
 }
 @Given("^I click on EDF Energy as my gas supplier$")
 public void i_click_on_EDF_Energy_as_my_gas_supplier() throws Throwable {
-	supplierPage.clickEDFEnergyForGas();
+	supplierPage.clickNPOWERForGas();
 }
 @Given("^I click on the gas other supplier dropdown and select \"([^\"]*)\"$")
 public void i_click_on_the_gas_other_supplier_dropdown_and_select(String otherSupplierValue) throws Throwable {
@@ -82,11 +89,36 @@ public void i_click_Next_to_continue() throws Throwable {
 supplierPage.clickNextButton();
 }
 
-@Then("^I should move successfully onto Your Energy page")
+@Then("^I should move successfully onto Your Energy page$")
 public void i_should_move_successfully_onto_Your_Energy_page() throws Throwable {
-	supplierPage.verifyUserIsOnYourEnergyPage();
-}
+    supplierPage.verifyUserIsOnCorrectYourEnergyPage();
+    
+    energyPage.setElectricityTariff("Blue+Fixed Price January 2017" );
+//energyPage.clickYesEconomy7Meter();
+energyPage .clickNoEconomy7Meter();
+energyPage .setHowDoYouPayForElectricity("Monthly Direct Debit");
+energyPage .clickYesForElectricityMainSourceOfHeating();
+energyPage .clickNoForElectricityMainSourceOfHeating();
+//energyPage.clickKwHForCurrentElectricityUsage();
+energyPage .click£ForCurrentElectricityUsage();
+//energyPage.setKwHText_Eco7NotClicked(59);
+energyPage .set£Text_Eco7NotClicked(5);
+//energyPage.setKwhDropdown_Eco7NotChecked("Quarterly");
+energyPage .set£Dropdown_Eco7NotChecked("Six monthly");
+energyPage .setDateForBillDate("5");
+energyPage .clickNextButton();
+energyPage.verifyUserIsOnGasPage();
+energyPage.setWhatGasTariffAreYouOnDropdown("Standard");
+energyPage.setHowDoYouPayForYourGasDropdown("Monthly Direct Debit");
+energyPage.clickNoForGasMainSourceOfHeating();
+energyPage.clickKwHForCurrentGasUsage();
+energyPage.setKwHTextForGas(100);
+energyPage.setKwhForGasDropdown("Monthly");
+energyPage.setDateForBillDateForGas("16");
+energyPage.clickNextButton();
+	
 
+}
 
 
 }
