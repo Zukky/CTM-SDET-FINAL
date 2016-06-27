@@ -15,6 +15,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import support.URLs;
+
 public class Energy_page {
 	private static Logger log = LogManager.getLogger(Energy_page.class);
 	private WebDriver driver;
@@ -259,7 +261,6 @@ public class Energy_page {
     		liListArray[i-1] = eachValue;
     	}
     	
-
     	try {
         	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
         	int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
@@ -1328,6 +1329,19 @@ public class Energy_page {
 		return this;
 	}
 	
+	/**
+	 * Verify user is on the correct next page (Your Energy page -> Your Preferences page)
+	 * 
+	 * @return this Supplier_page class instance.
+	 */
+	public Energy_page verifyUserIsOnCorrectYourPreferencesPage(){
+		wait = new WebDriverWait(driver, timeout);
+ 
+		log.info("Verifying if user is on the correct page...");
+		wait.until(ExpectedConditions.urlToBe(URLs.yourPreferencesURL)); 
+		log.info("Page URL expected: " + URLs.yourPreferencesURL + "\nActual: " + driver.getCurrentUrl() + "\nSuccess! User is successfully on the correct Your Preferences page.");
+		return this;
+	}
 /*	public Energy_page fillElectricityDetails_ifEco7IsNotClicked(String electricityTariff, String howDoYouPayForYourElectricity, String electricityUsage, String setDayForBillDate){
 		
 		

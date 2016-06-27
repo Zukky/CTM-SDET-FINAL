@@ -10,8 +10,10 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import pageObjects.Energy_page;
+import pageObjects.Preferences_page;
+import pageObjects.Results_page;
 import pageObjects.Supplier_page;
-import support.Strings;
+import support.URLs;
 
 
 public class StepDefinitions {
@@ -19,15 +21,19 @@ public class StepDefinitions {
 	private WebDriver driver;
 	private Supplier_page supplierPage;
 	private Energy_page energyPage;
+	private Preferences_page preferencesPage;
+	private Results_page resultsPage;
 @Before
 public void Setup(){
 	//remember to externalise these into a strings class
 	System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver.exe");
 	driver = new ChromeDriver();
 	//driver.manage().window().maximize();
-	driver.get(Strings.baseURL);
+	driver.get(URLs.baseURL);
 	supplierPage = PageFactory.initElements(driver, Supplier_page.class);
 	energyPage = PageFactory.initElements(driver, Energy_page.class);
+	preferencesPage = PageFactory.initElements(driver,Preferences_page.class);
+	resultsPage = PageFactory.initElements(driver, Results_page.class);
 }
 
 @After
@@ -56,7 +62,7 @@ public void i_click_on_find_postcode() throws Throwable {
 
 @Given("^I do have my energy bill$")
 public void i_do_have_my_energy_bill() throws Throwable {
-	supplierPage.clickIDontHaveMyBill();
+	supplierPage.clickIveGotMyBill();
 }
 @Given("^I want to compare Gas & Electricity prices$")
 public void i_want_to_compare_Gas_and_Electricity_prices() throws Throwable {
@@ -116,7 +122,19 @@ energyPage.setKwHTextForGas(100);
 energyPage.setKwhForGasDropdown("Monthly");
 energyPage.setDateForBillDateForGas("16");
 energyPage.clickNextButton();
-	
+energyPage.verifyUserIsOnCorrectYourPreferencesPage();
+
+preferencesPage.clickFixedTariff();
+preferencesPage.clickVariableTariff();
+preferencesPage.clickAllTariff();
+preferencesPage.clickMonthlyDirectDebit();
+preferencesPage.clickQuarterlyDirectDebit();
+preferencesPage.clickPayOnReceiptOfBill();
+preferencesPage.clickAllPaymentTypes();
+preferencesPage.setEmailAddress("ctm_sdet@hotmail.com");
+preferencesPage.clickMarketingInformationCheckbox();
+preferencesPage.clickTermsAndConditionsCheckbox();
+preferencesPage.clickGotoPricesButton();
 
 }
 

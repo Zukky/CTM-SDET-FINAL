@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import org.junit.Assert;
-import support.Strings;
+import support.URLs;
 
 public class Supplier_page {
 
@@ -23,7 +23,7 @@ public class Supplier_page {
 	private WebDriver driver;
 	private WebDriverWait wait;
 	private int timeout = 20;
-	Strings stringClass = new Strings();
+	URLs stringClass = new URLs();
 
     @FindBy(id = "your-postcode")
     @CacheLookup
@@ -158,7 +158,7 @@ public class Supplier_page {
 	 */
 	public Supplier_page verifyUserIsOnCorrectPage(){
 		wait = new WebDriverWait(driver, timeout);
-		if (wait.until(ExpectedConditions.urlToBe(Strings.expectedBaseURL)) == true){
+		if (wait.until(ExpectedConditions.urlToBe(URLs.expectedBaseURL)) == true){
 			log.info("Page URL matches with expected Your Supplier URL. User is successfully on the Your Supplier page.");
 		}
 		return this;

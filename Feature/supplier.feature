@@ -40,3 +40,8 @@ And I click on EDF Energy as my gas supplier
 When I click Next to continue
 Then I should move successfully onto Your Energy page
 
+@compareGasOnly
+
+@compareElectricityOnly
+
+
