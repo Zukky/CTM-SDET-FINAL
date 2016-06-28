@@ -1,24 +1,29 @@
 #Author: Zukky Baig | Zukky@hotmail.co.uk
 
-Feature: CTM Energy User Journey for Duel Tariff Purchase
+Feature: CTM Energy User Journey for Duel Tariff and Single Tariff
 As a user of Compare The Market Energy website
 I want to compare prices for gas and electricity
 So that I can see which one is best for my needs
 
-@compareGasElectric
-Scenario: 1
-Given I am successfully on Your Supplier page
-And my postcode is "PE2 6YS"
-And I click on find postcode 
-And I do have my energy bill
-And I want to compare Gas & Electricity prices
-And I have different Gas & Electricity suppliers
-And I click on British Gas as my electricity supplier
-##And I click on the electricity other supplier dropdown and select "Avro Energy"
-And I click on EDF Energy as my gas supplier
-##And I click on the gas other supplier dropdown and select "Avro Energy"
-When I click Next to continue
-Then I should move successfully onto Your Energy page
 
+@GreenPath 
+Scenario: Comparing Gas & Electricity prices with a bill
+Given Kiwi wants to compare Gas and Electricity prices and she does have her bill
+When Kiwi enters her supplier, energy, preferences for both suppliers
+Then Kiwi will be shown a list of tariff results
+And Kiwi chooses cheapest tariff to view
 
+@GreenPath 
+Scenario: Comparing only Gas prices without a bill
+Given Kiwi wants to compare only Gas prices and she doesn't have her bill
+When Kiwi enters her supplier, energy, preferences for her gas supplier
+Then Kiwi will be shown a list of tariff results
+And Kiwi chooses cheapest tariff to view
+
+@GreenPath 
+Scenario: Comparing only Electricity prices with a bill
+Given Kiwi wants to compare only Electricity prices and she does have her bill
+When Kiwi enters her supplier, energy, preferences for her electricity supplier
+Then Kiwi will be shown a list of tariff results
+And Kiwi chooses cheapest tariff to view
 

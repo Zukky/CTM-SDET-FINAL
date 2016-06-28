@@ -8,13 +8,35 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+/**
+* <h1>Your Results Page</h1>
+* This page holds all elements and methods to those elements for Your Results webpage.
+* 
+* <p>
+* <b>Note:</b> This is a Page Object Model design using PageFactory. 
+* It allows us to have objects that we can interact with in a clean, neat and maintainable way.
+* Methods and logic are all applied here. 
+* 
+* <p>
+* <b>How it works:</b> Each method corresponds to a element on the webpage. For instance,
+* if you want to click on a button, the button id, xpath, css, className, tagName, linktext, partialLinkText
+* have been mapped to. All you have todo is call the method for that particular webelement and it will interact with it. 
+* Javadoc comments have been applied to all public methods, just in case you don't understand what a method does. Remember, some of them
+* have pre-requisites, please read them to ensure that those pre-requisites are fulfilled before invoking that method.
+*
+* 
+*
+* @author  Zukky Baig
+* @version 1.0
+* @since   2016-06-27
+*/
 public class Results_page {
 	private static Logger log = LogManager.getLogger(Results_page.class);
 	private WebDriver driver;
@@ -29,9 +51,18 @@ public class Results_page {
     @CacheLookup
     private WebElement switchNow_button;
 	
+	@FindBy (id = "mm_t61_f_switch")
+    @CacheLookup
+    private WebElement onlyShowTariffsWeCanHelpYouSwitchTo_checkbox;
 	
+	@FindBy (id = "price-page-results-view")
+	@CacheLookup
+	private WebElement allPricePageResults;
 	
-	
+	@FindBy (xpath = "//*[@class='spinner']")
+	@CacheLookup
+	private WebElement loadSpinner;
+
 	/**
 	 * Wait for results to be populated
 	 * 
@@ -41,27 +72,29 @@ public class Results_page {
 		
 		// check if element is visible
 		log.info("Waiting for results to populate...");
-		wait = new WebDriverWait(driver, 30);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(results));
 		log.info("Results populated!");
 
 		return this;
 	}
 	
+	
 	/**
-	 * Click on the Supplier that has the most savings
-	 * 
-	 * There are 3 steps:
-	 * 1) Iterate through each result row and store the saving amount into an int array.
-	 * 2) In the array, iterate through and find the largest number (which is the highest saving amount).
-	 * 3) Map the highest saving number to the correct row and click its "More details" button
+	 * Click on 'More Details' button for the Supplier that has the highest saving amount
+	 * <p>
+	 * <p>There are 4 technical steps performed here:
+	 * <p>1) Click on "Only show tariffs we can help you switch to" using JavascriptExecutor under Switching Support for Refine Results.
+	 * <p>2) Iterate through each result row and store the saving amount into an int array.
+	 * <p>3) In the array, iterate through and find the largest number (which is the highest saving amount).
+	 * <p>4) Map the highest saving number to the correct row and click its "More details" button
 	 * 
 	 * @return this Results_page class instance.
 	 */
 	public Results_page clickMoreDetailsOnHighestSavingSupplier() {
 		
 		/**
-		 * How to read the Xpath:
+		 * <b>How to read the Xpath:</b>
 		 * 
 		 * 	 * .//*[@id='price-page-results-view']/div (entire results)/ -> div [i] (gives us a single row of result) 
 		 * -> div[2] (annual savings are stored here) -> div (no reason) 
@@ -70,7 +103,26 @@ public class Results_page {
 		 */
 		
 		/**
-		 * PART 1: Iterate through each result row and store the saving amount i.e. "£150" into an int array.
+		 * PART 1: Click on "Only show tariffs we can help you switch to" checkbox
+		 */
+		
+		//Initialise wait
+		wait = new WebDriverWait(driver, timeout);
+		
+		//Creating the Javascript Executor interface object by type casting
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		
+		//Javascript Execution script - click on "only show tariffs we can help you switch to" checkbox button
+		js.executeScript("document.getElementById('mm_t61_f_switch').click();");
+		log.info("'Only show tariffs we can help you switch to' filter checkbox clicked.");
+		
+		//Wait for results page to reload (check if loading spinner has been set to invisible
+		log.info("Waiting for page results to reload..");
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[@class='spinner']")));
+		
+		
+		/**
+		 * PART 2: Iterate through each result row and store the saving amount i.e. "£150" into an int array.
 		 */
 		
 		log.info("Finding the highest saving amount...");
@@ -109,7 +161,7 @@ public class Results_page {
 		}
 		
 		/**
-		 * PART 2: In the array, iterate through and find the largest number (which is the highest saving amount).
+		 * PART 3: In the array, iterate through and find the largest number (which is the highest saving amount).
 		 */
 		
 		//IF listOfAllPrices[n] is greater than largest (= MIN_VALUE), then set largest to listOfAllPrices[n]. 
@@ -123,8 +175,10 @@ public class Results_page {
 		log.info("Highest Saving is: £" + largest + "!");
 		
 		/**
-		 * PART 3: Map the highest saving number to the correct row and click its "More details" button
+		 * PART 4: Map the highest saving number to the correct row and click its "More details" button
 		 */
+		
+		log.info("Matching Highest Saving Price with the correct More Details button...");
 		
 		//Using the highest saving number. Map this to the correct MORE DETAILS button. Click that button.
 		for (int i3 = 1; i3 <= allResults.size(); i3++){
@@ -136,29 +190,60 @@ public class Results_page {
 			//check if listOfPrices are numbers. We don't want strings/nulls going into our Int Array and making it fail.
 			boolean isEachPriceANumber = NumberUtils.isNumber(listOfPrices.getText());
 			
-			//If listOfPrices are numbers AND IF Saving value on the webpage is the same as the int largest value THEN click its More Details button.
+			//If listOfPrices are numbers AND IF Saving value on the webpage is the same as the int largest value THEN click its respective More Details button.
 			if (isEachPriceANumber == true) {
-				if (Integer.parseInt(listOfPrices.getText()) == largest) {
+				if (Integer.parseInt(listOfPrices.getText()) == largest){
 					WebElement moreDetailsButton = driver
 							.findElement(By.xpath(".//*[@id='price-page-results-view']/div/div[" + i3
 									+ "]/div[7]/div/a[starts-with(@id, 'tariffSelection')]"));
-
-					if (moreDetailsButton.isDisplayed()) {
-						//click the More Details button.
+					
+					//Check if the More Details button is displayed
+					if(moreDetailsButton.isDisplayed()){
+						
+						//click the More Details Button
 						moreDetailsButton.click();
 						
-						// Get the supplier name to output to log.
+						// Supplier name locator
 						WebElement supplierNameAttachedToMoreDetails = driver.findElement(By.xpath(".//div[4]//section[1]/h3"));
+						
+						// Get the supplier name
 						String supplierName = supplierNameAttachedToMoreDetails.getText();
-						log.info("Clicked 'MORE DETAILS' button for: " + supplierName + "!");
+						
+						//Print supplier name
+						log.info("Clicked 'MORE DETAILS' button for: '" + supplierName + "'!");
+					} else {
+						//More Details is not present. Fail test.
+						log.info("'More Details' button not found!");
+						Assert.fail();
 						break;
+						
 					}
 				}
-			} else {
-				break;
-			}
+			} 	
+		break;
 		}
 		return this;
+	}
+
+	/**
+	 * Verify if "More Details" information modal for chosen tariff is displayed
+	 * 
+	 * @return this Results_page class instance.
+	 */	
+	public Results_page verifyMoreDetailsInformationIsDisplayed(){
+		
+		//check if element is visible
+		wait = new WebDriverWait(driver, timeout);
+		wait.until(ExpectedConditions.visibilityOf(switchNow_button));
+		
+		if (switchNow_button.isDisplayed()){
+			log.info("User can see More Detail information modal successfully.");
+		} else {
+			log.info("User cannot see More Detail information modal!");
+			Assert.fail();
+		}
+		return this;
+		
 	}
 	
 	/**
@@ -169,7 +254,7 @@ public class Results_page {
 	public Results_page validateSwitchNowButton() {
 		
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(switchNow_button));
 		
 		if (switchNow_button.isDisplayed()){
@@ -178,8 +263,6 @@ public class Results_page {
 			log.info("Switch Now button is NOT visible.");
 			Assert.fail();
 		}
-		
-		
 		return this;
 	}
 		

@@ -1,0 +1,142 @@
+2016-06-28 22:53:48.370 [main] INFO  pageObjects.Supplier_page - Page URL matches with expected Your Supplier URL. User is successfully on the Your Supplier page.
+2016-06-28 22:53:48.446 [main] INFO  pageObjects.Supplier_page - Postcode: PE2 6YS has successfully been entered into postcode textbox.
+2016-06-28 22:53:48.497 [main] INFO  pageObjects.Supplier_page - Find Postcode button has been clicked.
+2016-06-28 22:53:48.497 [main] INFO  pageObjects.Supplier_page - Waiting for the next part of journey to populate...
+2016-06-28 22:53:50.051 [main] INFO  pageObjects.Supplier_page - Next set of questions are visible to user. Continuing test..
+2016-06-28 22:53:50.100 [main] INFO  pageObjects.Supplier_page - 'I've Got My Bill' button is already selected. Skipping step.
+2016-06-28 22:53:50.100 [main] INFO  pageObjects.Supplier_page - URL has been set to check for https://energy.comparethemarket.com/energy/v2/yourEnergy
+2016-06-28 22:53:50.120 [main] INFO  pageObjects.Supplier_page - 'Gas & Electricity' is already selected. Skipping step.
+2016-06-28 22:53:50.173 [main] INFO  pageObjects.Supplier_page - 'No' radio button clicked. User has different suppliers for Gas and Electricity.
+2016-06-28 22:53:50.201 [main] INFO  pageObjects.Supplier_page - 'E-ON' is already selected. Skipping step.
+2016-06-28 22:53:50.259 [main] INFO  pageObjects.Supplier_page - 'Scottish Power' radio button clicked.
+2016-06-28 22:53:50.315 [main] INFO  pageObjects.Supplier_page - Next button has been clicked.
+2016-06-28 22:53:50.315 [main] INFO  pageObjects.Supplier_page - Verifying if user is on the correct Energy page...
+2016-06-28 22:53:50.827 [main] INFO  pageObjects.Supplier_page - Page URL expected: https://energy.comparethemarket.com/energy/v2/yourEnergy
+Actual: https://energy.comparethemarket.com/energy/v2/yourEnergy
+Success! User is successfully on the correct Your Energy page.
+2016-06-28 22:53:50.918 [main] INFO  pageObjects.Energy_page - 'Fixed 2 Year' drop down value has been selected.
+2016-06-28 22:53:50.988 [main] INFO  pageObjects.Energy_page - 'Yes' radio button clicked. User has Economy 7 meter.
+2016-06-28 22:53:51.076 [main] INFO  pageObjects.Energy_page - 'Pay On Receipt Of Bill' drop down value has been selected.
+2016-06-28 22:53:51.141 [main] INFO  pageObjects.Energy_page - 'Yes' radio button clicked. User uses Electricity as main source of heating.
+2016-06-28 22:53:51.174 [main] INFO  pageObjects.Energy_page - 'kWh' radio button is already selected. Skipping step.
+2016-06-28 22:53:51.255 [main] INFO  pageObjects.Energy_page - Electricity used (Economy 7) day in kWh: '500' has successfully been entered into the textbox.
+2016-06-28 22:53:51.307 [main] INFO  pageObjects.Energy_page - 'Annually' drop down value has been selected.
+2016-06-28 22:53:51.385 [main] INFO  pageObjects.Energy_page - Electricity used (Economy 7) night in kWh: '500' has successfully been entered into the textbox.
+2016-06-28 22:53:51.443 [main] INFO  pageObjects.Energy_page - Next button has been clicked.
+2016-06-28 22:53:51.465 [main] INFO  pageObjects.Energy_page - Verifying if user is on the Gas page...
+2016-06-28 22:53:51.476 [main] INFO  pageObjects.Energy_page - Success! User is on the Gas page.
+2016-06-28 22:53:51.560 [main] INFO  pageObjects.Energy_page - 'Fixed Price Energy June 2016' drop down value has been selected.
+2016-06-28 22:53:51.611 [main] INFO  pageObjects.Energy_page - 'Monthly Direct Debit' drop down value has been selected.
+2016-06-28 22:53:51.674 [main] INFO  pageObjects.Energy_page - 'Yes' radio button clicked. User uses Gas as main source of heating.
+2016-06-28 22:53:51.761 [main] INFO  pageObjects.Energy_page - '£' radio button clicked. Users current Gas usage type is '£'
+2016-06-28 22:53:51.873 [main] INFO  pageObjects.Energy_page - £: '350' has successfully been entered into £ textbox.
+2016-06-28 22:53:51.957 [main] INFO  pageObjects.Energy_page - 'Annually' drop down value has been selected.
+2016-06-28 22:53:51.995 [main] INFO  pageObjects.Energy_page - Next button has been clicked.
+2016-06-28 22:53:51.995 [main] INFO  pageObjects.Energy_page - Verifying if user is on Your Preferences page...
+2016-06-28 22:53:52.002 [main] INFO  pageObjects.Energy_page - Page URL expected: https://energy.comparethemarket.com/energy/v2/yourDetails
+Actual: https://energy.comparethemarket.com/energy/v2/yourDetails
+Success! User is successfully on the correct Your Preferences page.
+2016-06-28 22:53:52.143 [main] INFO  pageObjects.Preferences_page - 'Variable Tariff' radio button clicked.
+2016-06-28 22:53:52.197 [main] INFO  pageObjects.Preferences_page - 'Quarterly Direct Debit' radio button clicked.
+2016-06-28 22:53:52.268 [main] INFO  pageObjects.Preferences_page - Email: CTM@ctm.com has successfully been entered into email textbox.
+2016-06-28 22:53:52.345 [main] INFO  pageObjects.Preferences_page - 'Check' checkbox clicked for receiving marketing information
+2016-06-28 22:53:52.404 [main] INFO  pageObjects.Preferences_page - 'Check' checkbox clicked for confirming that user has read terms and conditions
+2016-06-28 22:53:52.457 [main] INFO  pageObjects.Preferences_page - 'Go to prices' button has been clicked.
+2016-06-28 22:53:52.458 [main] INFO  pageObjects.Preferences_page - Verifying if user is on Your Results page...
+2016-06-28 22:53:58.918 [main] INFO  pageObjects.Preferences_page - Page URL expected: https://energy.comparethemarket.com/energy/Results/YourResults
+Actual: https://energy.comparethemarket.com/energy/Results/YourResults
+Success! User is successfully on the correct Your Results page.
+2016-06-28 22:53:58.918 [main] INFO  pageObjects.Results_page - Waiting for results to populate...
+2016-06-28 22:54:10.061 [main] INFO  pageObjects.Results_page - Results populated!
+2016-06-28 22:54:10.154 [main] INFO  pageObjects.Results_page - 'Only show tariffs we can help you switch to' filter checkbox clicked.
+2016-06-28 22:54:10.154 [main] INFO  pageObjects.Results_page - Waiting for page results to reload..
+2016-06-28 22:54:11.234 [main] INFO  pageObjects.Results_page - Finding the highest saving amount...
+2016-06-28 22:54:11.674 [main] INFO  pageObjects.Results_page - Highest Saving is: £78!
+2016-06-28 22:54:11.674 [main] INFO  pageObjects.Results_page - Matching Highest Saving Price with the correct More Details button...
+2016-06-28 22:54:12.443 [main] INFO  pageObjects.Results_page - Clicked 'MORE DETAILS' button for: 'SSE Southern Electric - Standard Paperless Billing'!
+2016-06-28 22:54:12.488 [main] INFO  pageObjects.Results_page - User can see More Detail information modal successfully.
+2016-06-28 22:54:12.498 [main] INFO  pageObjects.Results_page - Switch Now button is visible.
+2016-06-28 22:54:20.823 [main] INFO  pageObjects.Supplier_page - Page URL matches with expected Your Supplier URL. User is successfully on the Your Supplier page.
+2016-06-28 22:54:20.899 [main] INFO  pageObjects.Supplier_page - Postcode: PE2 6YS has successfully been entered into postcode textbox.
+2016-06-28 22:54:20.955 [main] INFO  pageObjects.Supplier_page - Find Postcode button has been clicked.
+2016-06-28 22:54:20.955 [main] INFO  pageObjects.Supplier_page - Waiting for the next part of journey to populate...
+2016-06-28 22:54:22.504 [main] INFO  pageObjects.Supplier_page - Next set of questions are visible to user. Continuing test..
+2016-06-28 22:54:22.552 [main] INFO  pageObjects.Supplier_page - 'I Don't Have My Bill' clicked.
+2016-06-28 22:54:22.552 [main] INFO  pageObjects.Supplier_page - URL has been set to check for https://energy.comparethemarket.com/energy/v2/yourEnergyNoBill
+2016-06-28 22:54:22.611 [main] INFO  pageObjects.Supplier_page - 'Gas Only' clicked.
+2016-06-28 22:54:22.669 [main] INFO  pageObjects.Supplier_page - 'NPOWER' radio button clicked.
+2016-06-28 22:54:22.724 [main] INFO  pageObjects.Supplier_page - Next button has been clicked.
+2016-06-28 22:54:22.725 [main] INFO  pageObjects.Supplier_page - Verifying if user is on the correct Energy page...
+2016-06-28 22:54:23.235 [main] INFO  pageObjects.Supplier_page - Page URL expected: https://energy.comparethemarket.com/energy/v2/yourEnergyNoBill
+Actual: https://energy.comparethemarket.com/energy/v2/yourEnergyNoBill
+Success! User is successfully on the correct Your Energy page.
+2016-06-28 22:54:23.295 [main] INFO  pageObjects.Energy_page - 'Yes' radio button clicked. User does use a prepayment meter.
+2016-06-28 22:54:23.366 [main] INFO  pageObjects.Energy_page - How much do you currently spend on gas: '500' has successfully been entered into the textbox.
+2016-06-28 22:54:23.441 [main] INFO  pageObjects.Energy_page - 'Quarterly' drop down value has been selected.
+2016-06-28 22:54:23.495 [main] INFO  pageObjects.Energy_page - Next button has been clicked.
+2016-06-28 22:54:23.495 [main] INFO  pageObjects.Energy_page - Verifying if user is on Your Preferences page...
+2016-06-28 22:54:23.500 [main] INFO  pageObjects.Energy_page - Page URL expected: https://energy.comparethemarket.com/energy/v2/yourDetails
+Actual: https://energy.comparethemarket.com/energy/v2/yourDetails
+Success! User is successfully on the correct Your Preferences page.
+2016-06-28 22:54:23.623 [main] INFO  pageObjects.Preferences_page - 'All Tariffs' radio button clicked.
+2016-06-28 22:54:23.692 [main] INFO  pageObjects.Preferences_page - Email: CTM@ctm.com has successfully been entered into email textbox.
+2016-06-28 22:54:23.767 [main] INFO  pageObjects.Preferences_page - 'Check' checkbox clicked for receiving marketing information
+2016-06-28 22:54:23.827 [main] INFO  pageObjects.Preferences_page - 'Check' checkbox clicked for confirming that user has read terms and conditions
+2016-06-28 22:54:23.883 [main] INFO  pageObjects.Preferences_page - 'Go to prices' button has been clicked.
+2016-06-28 22:54:23.884 [main] INFO  pageObjects.Preferences_page - Verifying if user is on Your Results page...
+2016-06-28 22:54:26.837 [main] INFO  pageObjects.Preferences_page - Page URL expected: https://energy.comparethemarket.com/energy/Results/YourResults
+Actual: https://energy.comparethemarket.com/energy/Results/YourResults
+Success! User is successfully on the correct Your Results page.
+2016-06-28 22:54:26.837 [main] INFO  pageObjects.Results_page - Waiting for results to populate...
+2016-06-28 22:54:37.476 [main] INFO  pageObjects.Results_page - Results populated!
+2016-06-28 22:54:37.587 [main] INFO  pageObjects.Results_page - 'Only show tariffs we can help you switch to' filter checkbox clicked.
+2016-06-28 22:54:37.587 [main] INFO  pageObjects.Results_page - Waiting for page results to reload..
+2016-06-28 22:54:38.658 [main] INFO  pageObjects.Results_page - Finding the highest saving amount...
+2016-06-28 22:54:38.947 [main] INFO  pageObjects.Results_page - Highest Saving is: £277!
+2016-06-28 22:54:38.948 [main] INFO  pageObjects.Results_page - Matching Highest Saving Price with the correct More Details button...
+2016-06-28 22:54:39.553 [main] INFO  pageObjects.Results_page - Clicked 'MORE DETAILS' button for: 'npower - Pre Pay Fix October 2018'!
+2016-06-28 22:54:39.603 [main] INFO  pageObjects.Results_page - User can see More Detail information modal successfully.
+2016-06-28 22:54:39.619 [main] INFO  pageObjects.Results_page - Switch Now button is visible.
+2016-06-28 22:54:47.982 [main] INFO  pageObjects.Supplier_page - Page URL matches with expected Your Supplier URL. User is successfully on the Your Supplier page.
+2016-06-28 22:54:48.053 [main] INFO  pageObjects.Supplier_page - Postcode: PE2 6YS has successfully been entered into postcode textbox.
+2016-06-28 22:54:48.107 [main] INFO  pageObjects.Supplier_page - Find Postcode button has been clicked.
+2016-06-28 22:54:48.108 [main] INFO  pageObjects.Supplier_page - Waiting for the next part of journey to populate...
+2016-06-28 22:54:49.657 [main] INFO  pageObjects.Supplier_page - Next set of questions are visible to user. Continuing test..
+2016-06-28 22:54:49.676 [main] INFO  pageObjects.Supplier_page - 'I've Got My Bill' button is already selected. Skipping step.
+2016-06-28 22:54:49.676 [main] INFO  pageObjects.Supplier_page - URL has been set to check for https://energy.comparethemarket.com/energy/v2/yourEnergy
+2016-06-28 22:54:49.727 [main] INFO  pageObjects.Supplier_page - 'Electricity Only' clicked.
+2016-06-28 22:54:49.784 [main] INFO  pageObjects.Supplier_page - 'British Gas' radio button clicked.
+2016-06-28 22:54:49.838 [main] INFO  pageObjects.Supplier_page - Next button has been clicked.
+2016-06-28 22:54:49.839 [main] INFO  pageObjects.Supplier_page - Verifying if user is on the correct Energy page...
+2016-06-28 22:54:50.348 [main] INFO  pageObjects.Supplier_page - Page URL expected: https://energy.comparethemarket.com/energy/v2/yourEnergy
+Actual: https://energy.comparethemarket.com/energy/v2/yourEnergy
+Success! User is successfully on the correct Your Energy page.
+2016-06-28 22:54:50.430 [main] INFO  pageObjects.Energy_page - 'Fixed Price July 2018' drop down value has been selected.
+2016-06-28 22:54:50.461 [main] INFO  pageObjects.Energy_page - 'No' radio button is already selected. Skipping step.
+2016-06-28 22:54:50.543 [main] INFO  pageObjects.Energy_page - 'Prepayment Meter' drop down value has been selected.
+2016-06-28 22:54:50.574 [main] INFO  pageObjects.Energy_page - 'No' radio button is already selected. Skipping step.
+2016-06-28 22:54:50.638 [main] INFO  pageObjects.Energy_page - '£' radio button clicked. Users current electricity usage type is '£'
+2016-06-28 22:54:50.720 [main] INFO  pageObjects.Energy_page - £: '680' has successfully been entered into £ textbox.
+2016-06-28 22:54:50.804 [main] INFO  pageObjects.Energy_page - 'Annually' drop down value has been selected.
+2016-06-28 22:54:50.866 [main] INFO  pageObjects.Energy_page - Next button has been clicked.
+2016-06-28 22:54:50.866 [main] INFO  pageObjects.Energy_page - Verifying if user is on Your Preferences page...
+2016-06-28 22:54:50.891 [main] INFO  pageObjects.Energy_page - Page URL expected: https://energy.comparethemarket.com/energy/v2/yourDetails
+Actual: https://energy.comparethemarket.com/energy/v2/yourDetails
+Success! User is successfully on the correct Your Preferences page.
+2016-06-28 22:54:51.019 [main] INFO  pageObjects.Preferences_page - 'Fixed Tariff' radio button clicked.
+2016-06-28 22:54:51.090 [main] INFO  pageObjects.Preferences_page - Email: CTM@ctm.com has successfully been entered into email textbox.
+2016-06-28 22:54:51.170 [main] INFO  pageObjects.Preferences_page - 'Check' checkbox clicked for confirming that user has read terms and conditions
+2016-06-28 22:54:51.223 [main] INFO  pageObjects.Preferences_page - 'Go to prices' button has been clicked.
+2016-06-28 22:54:51.224 [main] INFO  pageObjects.Preferences_page - Verifying if user is on Your Results page...
+2016-06-28 22:54:54.728 [main] INFO  pageObjects.Preferences_page - Page URL expected: https://energy.comparethemarket.com/energy/Results/YourResults
+Actual: https://energy.comparethemarket.com/energy/Results/YourResults
+Success! User is successfully on the correct Your Results page.
+2016-06-28 22:54:54.728 [main] INFO  pageObjects.Results_page - Waiting for results to populate...
+2016-06-28 22:55:05.354 [main] INFO  pageObjects.Results_page - Results populated!
+2016-06-28 22:55:05.448 [main] INFO  pageObjects.Results_page - 'Only show tariffs we can help you switch to' filter checkbox clicked.
+2016-06-28 22:55:05.448 [main] INFO  pageObjects.Results_page - Waiting for page results to reload..
+2016-06-28 22:55:06.521 [main] INFO  pageObjects.Results_page - Finding the highest saving amount...
+2016-06-28 22:55:06.656 [main] INFO  pageObjects.Results_page - Highest Saving is: £30!
+2016-06-28 22:55:06.656 [main] INFO  pageObjects.Results_page - Matching Highest Saving Price with the correct More Details button...
+2016-06-28 22:55:07.223 [main] INFO  pageObjects.Results_page - Clicked 'MORE DETAILS' button for: 'ScottishPower - Prepay Help Beat Cancer Fixed Price Energy Nov2017'!
+2016-06-28 22:55:07.257 [main] INFO  pageObjects.Results_page - User can see More Detail information modal successfully.

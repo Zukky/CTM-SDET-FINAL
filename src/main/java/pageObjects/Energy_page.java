@@ -1,6 +1,5 @@
 package pageObjects;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -8,15 +7,39 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import support.URLs;
-
+import urls.URLs;
+/**
+* <h1>Your Energy Page</h1>
+* This page holds all elements and methods to those elements for Your Energy webpage.
+* 
+* <p>
+* <b>Note:</b> This is a Page Object Model design using PageFactory. 
+* It allows us to have objects that we can interact with in a clean, neat and maintainable way.
+* Methods and logic are all applied here. 
+* 
+* <p>
+* <b>How it works:</b> Each method corresponds to a element on the webpage. For instance,
+* if you want to click on a button, the button id, xpath, css, className, tagName, linktext, partialLinkText
+* have been mapped to. All you have todo is call the method for that particular webelement and it will interact with it. 
+* Javadoc comments have been applied to all public methods, just in case you don't understand what a method does. Remember, some of them
+* have pre-requisites, please read them to ensure that those pre-requisites are fulfilled before invoking that method.
+*
+* 
+*
+* @author  Zukky Baig
+* @version 1.0
+* @since   2016-06-27
+*/
 public class Energy_page {
 	private static Logger log = LogManager.getLogger(Energy_page.class);
 	private WebDriver driver;
@@ -28,7 +51,7 @@ public class Energy_page {
 	 * These are only visible if on "Your Supplier" page, "I've got my bill" is checked.
 	 * 
 	 */
-	@FindBy (id = "electricity_tariff_additional_info_chosen")
+	@FindBy (id = "electricity-tariff-additional-info")
     @CacheLookup
     private WebElement electricityTariff_dropdown;
 	
@@ -40,9 +63,9 @@ public class Energy_page {
     @CacheLookup
     private WebElement yesEconomy7_IHaveBill_radioButton;
 	
-	@FindBy (id = "electricity_payment_method_dropdown_link_chosen")
-    @CacheLookup
-    private WebElement electricityHowDoYouPay_dropdown;
+	@FindBy (id = "electricity-payment-method-dropdown-link")
+	@CacheLookup
+	private WebElement electricityHowDoYouPay_dropdown;
 	
 	@FindBy (xpath = "//label[@for='electricity-main-heating-yes']")
     @CacheLookup
@@ -64,7 +87,7 @@ public class Energy_page {
     @CacheLookup
     private WebElement electricityUsageForKwh_textbox;
 	
-	@FindBy (id = "electricity_usage_dropdown_chosen")
+	@FindBy (id = "electricity-usage-dropdown")
     @CacheLookup
     private WebElement electricityUsageForKwh_dropdown;
 	
@@ -72,7 +95,7 @@ public class Energy_page {
     @CacheLookup
     private WebElement electricityUsageForPound_textbox;
 	
-	@FindBy (id = "electricity_spend_dropdown_chosen")
+	@FindBy (id = "electricity-spend-dropdown")
     @CacheLookup
     private WebElement electricityUsageForPound_dropdown;
 	
@@ -92,7 +115,7 @@ public class Energy_page {
     @CacheLookup
     private WebElement electricityUsedEconomy7KwhNIGHT_textbox;
 	
-	@FindBy (id = "economy_7_day_usage_dropdown_chosen")
+	@FindBy (id = "economy-7-day-usage-dropdown")
     @CacheLookup
     private WebElement electricityUsedEconomy7KwHDAY_dropdown;
 	
@@ -130,7 +153,7 @@ public class Energy_page {
     @CacheLookup
     private WebElement howMuchSpendOnElectricity_textbox;
 	
-	@FindBy (id = "electricity_current_spend_period_chosen")
+	@FindBy (id = "electricity-current-spend-period")
     @CacheLookup
     private WebElement electricityPeriod_dropdown;
 	
@@ -142,7 +165,7 @@ public class Energy_page {
     @CacheLookup
     private WebElement howMuchYouSpendOnGas_textbox;
 	
-	@FindBy (id = "gas_current_spend_period_chosen")
+	@FindBy (id = "gas-current-spend-period")
     @CacheLookup
     private WebElement gasPeriod_dropdown;
 	
@@ -160,11 +183,11 @@ public class Energy_page {
 	 * 
 	 */
 	
-	@FindBy (id = "gas_tariff_additional_info_chosen")
+	@FindBy (id = "gas-tariff-additional-info")
     @CacheLookup
     private WebElement gasTariff_dropdown;
 	
-	@FindBy (id = "gas_payment_method_dropdown_link_chosen")
+	@FindBy (id = "gas-payment-method-dropdown-link")
     @CacheLookup
     private WebElement howDoYouPayForGas_dropdown;
 	
@@ -188,7 +211,7 @@ public class Energy_page {
     @CacheLookup
     private WebElement gasUsage_textbox;
 	
-	@FindBy (id = "type_of_Gas_bill_usage_dropdown_chosen")
+	@FindBy (id = "type-of-Gas-bill-usage-dropdown")
     @CacheLookup
     private WebElement gasUsagePeriod_dropdown;
 	
@@ -196,7 +219,7 @@ public class Energy_page {
     @CacheLookup
     private WebElement gasSpend_textbox;
 	
-	@FindBy (id = "type_of_Gas_bill_dropdown_chosen")
+	@FindBy (id = "type-of-Gas-bill-dropdown")
     @CacheLookup
     private WebElement gasSpendPeriod_dropdown;
 	
@@ -233,65 +256,50 @@ public class Energy_page {
 	 */
 	
     /**
-	 * Click and set "What electricity tariff are you on?" dropdown box
+	 * set "What electricity tariff are you on?" dropdown box
 	 * 
-	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p><b>Pre-requisite:</b>  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 * 
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */
 	public Energy_page setElectricityTariffDropdown(String dropdownValue){
-    	//Click on dropdown so it is in view.
-		electricityTariff_dropdown.click();
     	
-    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='electricity_tariff_additional_info_chosen']/div/ul")).findElements(By.tagName("li"));
-
-    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-    	String[] liListArray = new String[listOfLi.size()];
+    	//Initialise Select and point to the appropriate Select ID
+    	Select select = new Select(electricityTariff_dropdown);
     	
-    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<=listOfLi.size(); i++) {
-    		
-    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-    		WebElement liList = driver.findElement(By.xpath("//*[@id='electricity_tariff_additional_info_chosen']/div/ul/li[" + i + "]"));
-    		
-    		//Get all the values of the <li> (values) and store it into a string.
-    		String eachValue = liList.getText();
-    		
-    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-    		liListArray[i-1] = eachValue;
-    	}
+    	//Creating the Javascript Executor interface object by type casting
+    	JavascriptExecutor executor = (JavascriptExecutor)driver;
     	
+    	//Find the Select ID and set it to visible
+    	executor.executeScript("document.getElementById('electricity-tariff-additional-info').style.display='block';");
+    	
+    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
     	try {
-        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-        	int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-        	
-           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.	
-        	if (conversionArray < 0) {
-        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-        	} else {
-            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-            	listOfLi.get(conversionArray).click();
-            	log.info(dropdownValue + " has been selected.");
-        	}
+    	select.selectByVisibleText(dropdownValue);
+    	
+    	//log output.
+    	log.info("'" + dropdownValue + "' drop down value has been selected.");
     	}
-    	 catch (ArrayIndexOutOfBoundsException e) {
-     		log.error(e);
-     	}  	
+    	//If user enters in a wrong value. Then output to console and fail test.
+    	catch (NoSuchElementException e) {
+    		
+    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+    	Assert.fail();
+    	}
 		return this;
 	}
 	
     /**
 	 * Click Yes for "Do you have an Economy 7 meter?"
 	 *
-	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p><b>Pre-requisite:</b>  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */
-	public Energy_page clickYesEconomy7Meter() {
+	public Energy_page clickYesForEconomy7Meter() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(yesEconomy7_IHaveBill_radioButton));
 		
 		//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -310,13 +318,13 @@ public class Energy_page {
     /**
 	 * Click No for "Do you have an Economy 7 meter?"
 	 *
-	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p><b>Pre-requisite:</b>  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
-	public Energy_page clickNoEconomy7Meter() {
+	public Energy_page clickNoForEconomy7Meter() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(noEconomy7_IHaveBill_radioButton));
 		
 		//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -333,68 +341,49 @@ public class Energy_page {
 	}
 	
     /**
-	 * Click and set "How do you pay for your electricity" dropdown box
+	 * set "How do you pay for your electricity?" dropdown box
 	 * 
-	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p><b>Pre-requisite:</b>  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 * 
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */
 	public Energy_page setHowDoYouPayForElectricity(String dropdownValue){
-    	//Click on dropdown so it is in view.
-		electricityHowDoYouPay_dropdown.click();
+    	//Initialise Select and point to the appropriate Select ID
+    	Select select = new Select(electricityHowDoYouPay_dropdown);
     	
-    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='electricity_payment_method_dropdown_link_chosen']/div/ul")).findElements(By.tagName("li"));
-
-    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-    	String[] liListArray = new String[listOfLi.size()];
+    	//Creating the Javascript Executor interface object by type casting
+    	JavascriptExecutor executor = (JavascriptExecutor)driver;
     	
-    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<=listOfLi.size(); i++) {
-    		
-    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-    		WebElement liList = driver.findElement(By.xpath("//*[@id='electricity_payment_method_dropdown_link_chosen']/div/ul/li[" + i + "]"));
-    		
-    		//Get all the values of the <li> (values) and store it into a string.
-    		String eachValue = liList.getText();
-    		
-    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-    		liListArray[i-1] = eachValue;
-    	}
+    	//Find the Select ID and set it to visible
+    	executor.executeScript("document.getElementById('electricity-payment-method-dropdown-link').style.display='block';");
     	
-
+    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
     	try {
-        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-    		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-        	
-           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-        	if (conversionArray == -1){
-        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-        		Assert.fail();
-        		
-        	} else {
-            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-            	listOfLi.get(conversionArray).click();
-            	log.info(dropdownValue + " has been selected."); 	
-        	}
+    	select.selectByVisibleText(dropdownValue);
+    	
+    	//log output.
+    	log.info("'" + dropdownValue + "' drop down value has been selected.");
     	}
-    	 catch (ArrayIndexOutOfBoundsException e) {
-     		log.error(e);
-     	}  	
+    	//If user enters in a wrong value. Then output to console and fail test.
+    	catch (NoSuchElementException e) {
+    		
+    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+    	Assert.fail();
+    	}
 		return this;
 	}
 
     /**
 	 * Click Yes for "Is electricity your main source of heating?"
 	 * 
-	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p><b>Pre-requisite:</b>  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page clickYesForElectricityMainSourceOfHeating() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(electricityMainSourceOfHeating_yes_radioButton));
 		
 		//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -413,7 +402,7 @@ public class Energy_page {
     /**
 	 * Click No for "Is electricity your main source of heating?"
 	 * 
-	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p><b>Pre-requisite:</b>  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
@@ -438,13 +427,13 @@ public class Energy_page {
     /**
 	 * Click kWh for "What is your current electricity usage"?
 	 * 
-	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p><b>Pre-requisite:</b>  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page clickKwHForCurrentElectricityUsage() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(kwh_radioButton));
 		
 		//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -464,13 +453,13 @@ public class Energy_page {
     /**
 	 * Click £ for "What is your current electricity usage"?
 	 * 
-	 * Pre-requisite:  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p><b>Pre-requisite:</b>  Only use if on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page click£ForCurrentElectricityUsage() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(pound_radioButton));
 		
 		//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -490,77 +479,60 @@ public class Energy_page {
 	 * Set kWh text for "What is your current electricity usage?"
 	 * (Economy 7 is NOT checked)
 	 * 
-	 * Pre-requisites: ONLY USE
-	 * 1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
-	 * 2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
+	 * <p><b>Pre-requisite:</b> ONLY USE
+	 * <p>1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p>2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
 	 * 
 	 * @return this Energy_page class instance.
 	 */	
-	public Energy_page setKwHText_Eco7NotClicked(int value) {
+	public Energy_page setKwhTextForElectricity(int value) {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(electricityUsageForKwh_textbox));
 		
 		electricityUsageForKwh_textbox.clear();
 		electricityUsageForKwh_textbox.sendKeys(""+value);
-		log.info("kWh: " + value + " has successfully been entered into kWh textbox.");
+		log.info("kWh: '" + value + "' has successfully been entered into kWh textbox.");
 		return this;
 
 	}
 	
     /**
-	 * Click and set kWh dropdown box for "What is your current electricity usage?"
+	 * Set kWh dropdown box for "What is your current electricity usage?"
 	 * (Economy 7 is NOT checked)
 	 * 
-	 * Pre-requisites: ONLY USE
-	 * 1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
-	 * 2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
+	 * <p><b>Pre-requisite:</b> ONLY USE
+	 * <p>1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p>2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */	
-	public Energy_page setKwhDropdown_Eco7NotChecked(String dropdownValue){
-    	//Click on dropdown so it is in view.
-		electricityUsageForKwh_dropdown.click();
+	public Energy_page setKwhForElectricityDropdown(String dropdownValue){
+ 
+		//Initialise Select and point to the appropriate Select ID
+    	Select select = new Select(electricityUsageForKwh_dropdown);
     	
-    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='electricity_usage_dropdown_chosen']/div/ul")).findElements(By.tagName("li"));
-
-    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-    	String[] liListArray = new String[listOfLi.size()];
+    	//Creating the Javascript Executor interface object by type casting
+    	JavascriptExecutor executor = (JavascriptExecutor)driver;
     	
-    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<=listOfLi.size(); i++) {
-    		
-    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-    		WebElement liList = driver.findElement(By.xpath("//*[@id='electricity_usage_dropdown_chosen']/div/ul/li[" + i + "]"));
-    		
-    		//Get all the values of the <li> (values) and store it into a string.
-    		String eachValue = liList.getText();
-    		
-    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-    		liListArray[i-1] = eachValue;
-    	}
+    	//Find the Select ID and set it to visible
+    	executor.executeScript("document.getElementById('electricity-usage-dropdown').style.display='block';");
     	
-
+    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
     	try {
-        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-    		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-        	
-           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-        	if (conversionArray == -1){
-        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-        		Assert.fail();
-        		
-        	} else {
-            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-            	listOfLi.get(conversionArray).click();
-            	log.info(dropdownValue + " has been selected."); 	
-        	}
+    	select.selectByVisibleText(dropdownValue);
+    	
+    	//log output.
+    	log.info("'" + dropdownValue + "' drop down value has been selected.");
     	}
-    	 catch (ArrayIndexOutOfBoundsException e) {
-     		log.error(e);
-     	}  	
+    	//If user enters in a wrong value. Then output to console and fail test.
+    	catch (NoSuchElementException e) {
+    		
+    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+    	Assert.fail();
+    	}
+    
 		return this;
 	}
 	
@@ -568,102 +540,84 @@ public class Energy_page {
 	 * Set £ text for "What is your current electricity usage?"
 	 * (Economy 7 is NOT checked)
 	 * 
-	 * Pre-requisites: ONLY USE
-	 * 1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
-	 * 2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
+	 * <p><b>Pre-requisite:</b> ONLY USE
+	 * <p>1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p>2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
-	public Energy_page set£Text_Eco7NotClicked(int value) {
+	public Energy_page set£TextForElectricity(int value) {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(electricityUsageForPound_textbox));
 
 		electricityUsageForPound_textbox.clear();
 		electricityUsageForPound_textbox.sendKeys(""+value);
 	
-		log.info("£: " + value + " has successfully been entered into £ textbox.");
+		log.info("£: '" + value + "' has successfully been entered into £ textbox.");
 		return this;
 
 	}
 	
     /**
-	 * Click and set £ dropdown box for "What is your current electricity usage?"
+	 * Set £ dropdown box for "What is your current electricity usage?"
 	 * (Economy 7 is NOT checked)
 	 * 
-	 * Pre-requisites: ONLY USE
-	 * 1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
-	 * 2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
+	 * <p><b>Pre-requisite:</b> ONLY USE
+	 * <p>1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p>2) If on Energy Page, "Do you have an Economy 7 meter" is set to "No".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */	
-	public Energy_page set£Dropdown_Eco7NotChecked(String dropdownValue){
-    	//Click on dropdown so it is in view.
-		electricityUsageForPound_dropdown.click();
+	public Energy_page set£DropdownForElectricity(String dropdownValue){
+
+	 	//Initialise Select and point to the appropriate Select ID
+    	Select select = new Select(electricityUsageForPound_dropdown);
     	
-    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='electricity_spend_dropdown_chosen']/div/ul")).findElements(By.tagName("li"));
+    	//Creating the Javascript Executor interface object by type casting
+    	JavascriptExecutor executor = (JavascriptExecutor)driver;
     	
-    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-    	String[] liListArray = new String[listOfLi.size()];
+    	//Find the Select ID and set it to visible
+    	executor.executeScript("document.getElementById('electricity-spend-dropdown').style.display='block';");
     	
-    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<=listOfLi.size(); i++) {
-    		
-    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-    		WebElement liList = driver.findElement(By.xpath("//*[@id='electricity_spend_dropdown_chosen']/div/ul/li[" + i + "]"));
-    		
-    		//Get all the values of the <li> (values) and store it into a string.
-    		String eachValue = liList.getText();
-    		
-    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-    		liListArray[i-1] = eachValue;
-    	}
-    	
+    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
     	try {
-    		
-        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-    		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-        	//log.info(conversionArray);
-    		
-           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-        	if (conversionArray < 0){
-        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-        		Assert.fail();
-        		
-        	} else {
-            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-            	listOfLi.get(conversionArray).click();
-            	log.info(dropdownValue + " has been selected."); 	
-        	}
+    	select.selectByVisibleText(dropdownValue);
+    	
+    	//log output.
+    	log.info("'" + dropdownValue + "' drop down value has been selected.");
     	}
-    	 catch (ArrayIndexOutOfBoundsException e) {
-     		log.error(e);
-     	}  	
+    	//If user enters in a wrong value. Then output to console and fail test.
+    	catch (NoSuchElementException e) {
+    		
+    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+    	Assert.fail();
+    	}
+    	
 		return this;
 	}
 	
 	/**
 	 *  Click Date picker and set day for bill date for Electricity (You can use this if kWh OR £ OR Economy 7 is selected, can be used for both).
 	 * 
-	 * Pre-requisites: ONLY USE
-	 * 1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
-	 * 2) If on Energy Page, dropdown boxes for "kWh" OR "£" OR "Economy 7" are NOT set to Annually
+	 * <p><b>Pre-requisite:</b> ONLY USE
+	 * <p>1) If on Supplier Page, "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p>2) If on Energy Page, dropdown boxes for "kWh" OR "£" OR "Economy 7" are NOT set to Annually
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */	
-	public Energy_page setDateForBillDate(String date){
+	public Energy_page setDayForBillDateViaDatePickerForElectricity(int day){
 		billDate_datepicker.click();
 		List<WebElement> dates = driver.findElements(By.xpath("//*[@id='electricity-bill-day_table']/tbody//td"));
 		
 		int total_node = dates.size();
 		
 		for(int i=0; i<total_node;i++){
-			String day = dates.get(i).getText();
+			String singleDay = dates.get(i).getText();
 			
-			if(day.equals(date))
+			if(Integer.parseInt(singleDay) == day)
 			{
 				dates.get(i).click();
 				break;
@@ -684,19 +638,19 @@ public class Energy_page {
     /**
 	 * Set text to "Electricity used (Economy 7) day in kWh"
 	 * 
-	 * Pre-requisite: Only use if "Do you have an Economy 7 meter?" is checked to "Yes".
+	 * <p><b>Pre-requisite:</b> Only use if "Do you have an Economy 7 meter?" is checked to "Yes".
 	 *
 	 * @param value
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page setEconomy7DayInKwh(String value) {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(electricityUsedEconomy7KwhDAY_textbox));
 
 		electricityUsedEconomy7KwhDAY_textbox.clear();
 		electricityUsedEconomy7KwhDAY_textbox.sendKeys(value);
-		log.info("Electricity used (Economy 7) day in kWh: " + value + " has successfully been entered into the textbox.");
+		log.info("Electricity used (Economy 7) day in kWh: '" + value + "' has successfully been entered into the textbox.");
 		return this;
 
 	}
@@ -704,73 +658,57 @@ public class Energy_page {
     /**
 	 * Set text to "Electricity used (Economy 7) night in kWh"
 	 * 
-	 * Pre-requisite: Only use if "Do you have an Economy 7 meter?" is checked to "Yes".
+	 * <p><b>Pre-requisite:</b> Only use if "Do you have an Economy 7 meter?" is checked to "Yes".
 	 *
 	 * @param value
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page setEconomy7NightInKwh(String value) {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(electricityUsedEconomy7KwhNIGHT_textbox));
 
 		electricityUsedEconomy7KwhNIGHT_textbox.clear();
 		electricityUsedEconomy7KwhNIGHT_textbox.sendKeys(value);
-		log.info("Electricity used (Economy 7) night in kWh: " + value + " has successfully been entered into the textbox.");
+		log.info("Electricity used (Economy 7) night in kWh: '" + value + "' has successfully been entered into the textbox.");
 		return this;
 
 	}
 	
 	/**
-	 * Click and set "electricity used (economy 7) day in kWh" dropdown box
+	 * Set "electricity used (economy 7) day in kWh" dropdown box
 	 * 
-	 * Pre-requisite: Only use if "Do you have an Economy 7 meter?" is checked to "Yes".
+	 * <p><b>Pre-requisite:</b> Only use if "Do you have an Economy 7 meter?" is checked to "Yes" and "kWh" is selected.
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page setElectricityUsedIfEconomy7IsSelectedDropdown(String dropdownValue){
-    	//Click on dropdown so it is in view.
-		electricityUsedEconomy7KwHDAY_dropdown.click();
     	
-    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='economy_7_day_usage_dropdown_chosen']/div/ul")).findElements(By.tagName("li"));
-
-    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-    	String[] liListArray = new String[listOfLi.size()];
+	 	//Initialise Select and point to the appropriate Select ID
+    	Select select = new Select(electricityUsedEconomy7KwHDAY_dropdown);
     	
-    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<=listOfLi.size(); i++) {
-    		
-    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-    		WebElement liList = driver.findElement(By.xpath("//*[@id='economy_7_day_usage_dropdown_chosen']/div/ul/li[" + i + "]"));
-    		
-    		//Get all the values of the <li> (values) and store it into a string.
-    		String eachValue = liList.getText();
-    		
-    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-    		liListArray[i-1] = eachValue;
-    	}
+    	//Creating the Javascript Executor interface object by type casting
+    	JavascriptExecutor executor = (JavascriptExecutor)driver;
     	
-
+    	//Find the Select ID and set it to visible
+    	executor.executeScript("document.getElementById('economy-7-day-usage-dropdown').style.display='block';");
+    	
+    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
     	try {
-        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-    		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-        	
-           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-        	if (conversionArray == -1){
-        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-        		Assert.fail();
-        		
-        	} else {
-            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-            	listOfLi.get(conversionArray).click();
-            	log.info(dropdownValue + " has been selected."); 	
-        	}
+    	select.selectByVisibleText(dropdownValue);
+    	
+    	//log output.
+    	log.info("'" + dropdownValue + "' drop down value has been selected.");
     	}
-    	 catch (ArrayIndexOutOfBoundsException e) {
-     		log.error(e);
-     	}  	
+    	//If user enters in a wrong value. Then output to console and fail test.
+    	catch (NoSuchElementException e) {
+    		
+    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+    	Assert.fail();
+    	}
+		
+		
 		return this;
 	}
 	
@@ -782,13 +720,13 @@ public class Energy_page {
     /**
 	 * Click Yes for "Do you use a pre-payment meter?"
 	 *
-	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
+	 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page clickYesForPrepaymentMeter() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(yesIUsePrepaymentMeter_radioButton));
 		
 		//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -807,13 +745,13 @@ public class Energy_page {
     /**
 	 * Click No for "Do you use a pre-payment meter?"
 	 * 
-	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
+	 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page clickNoForPrepaymentMeter() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(noIDontUsePrepaymentMeter_radioButton));
 		
 		//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -831,146 +769,111 @@ public class Energy_page {
     /**
 	 * Set text to "How much do you currently spend on electricity?"
 	 * 
-	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
+	 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @param value
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page setHowMuchDoYouSpendOnElectricity(int value) {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(howMuchSpendOnElectricity_textbox));
 
 		howMuchSpendOnElectricity_textbox.clear();
 		howMuchSpendOnElectricity_textbox.sendKeys(""+value);
-		log.info("How much do you currently spend on electricity: " + value + " has successfully been entered into the textbox.");
+		log.info("How much do you currently spend on electricity: '" + value + "' has successfully been entered into the textbox.");
 		return this;
 
 	}
 	
 	/**
-	 * Click and set "How much do you currently spend on electricity?" dropdown box
+	 * Set "How much do you currently spend on electricity?" dropdown box
 	 * 
-	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
+	 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page setHowMuchDoYouSpendOnElectricityDropdown(String dropdownValue){
-    	//Click on dropdown so it is in view.
-		electricityPeriod_dropdown.click();
-    	
-    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='electricity_current_spend_period_chosen']/div/ul")).findElements(By.tagName("li"));
 
-    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-    	String[] liListArray = new String[listOfLi.size()];
+	 	//Initialise Select and point to the appropriate Select ID
+    	Select select = new Select(electricityPeriod_dropdown);
     	
-    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<=listOfLi.size(); i++) {
-    		
-    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-    		WebElement liList = driver.findElement(By.xpath("//*[@id='electricity_current_spend_period_chosen']/div/ul/li[" + i + "]"));
-    		
-    		//Get all the values of the <li> (values) and store it into a string.
-    		String eachValue = liList.getText();
-    		
-    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-    		liListArray[i-1] = eachValue;
-    	}
+    	//Creating the Javascript Executor interface object by type casting
+    	JavascriptExecutor executor = (JavascriptExecutor)driver;
     	
-
+    	//Find the Select ID and set it to visible
+    	executor.executeScript("document.getElementById('electricity-current-spend-period').style.display='block';");
+    	
+    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
     	try {
-        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-    		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-        	
-           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-        	if (conversionArray == -1){
-        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-        		Assert.fail();
-        		
-        	} else {
-            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-            	listOfLi.get(conversionArray).click();
-            	log.info(dropdownValue + " has been selected."); 	
-        	}
+    	select.selectByVisibleText(dropdownValue);
+    	
+    	//log output.
+    	log.info("'" + dropdownValue + "' drop down value has been selected.");
     	}
-    	 catch (ArrayIndexOutOfBoundsException e) {
-     		log.error(e);
-     	}  	
+    	//If user enters in a wrong value. Then output to console and fail test.
+    	catch (NoSuchElementException e) {
+    		
+    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+    	Assert.fail();
+    	}
+
 		return this;
 	}
 	
 	/**
 	 * Set text to "How much do you currently spend on gas?"
 	 * 
-	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
+	 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @param value
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page setHowMuchDoYouSpendOnGas(int value) {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(howMuchYouSpendOnGas_textbox));
 
 		howMuchYouSpendOnGas_textbox.clear();
 		howMuchYouSpendOnGas_textbox.sendKeys(""+value);
-		log.info("How much do you currently spend on gas: " + value + " has successfully been entered into the textbox.");
+		log.info("How much do you currently spend on gas: '" + value + "' has successfully been entered into the textbox.");
 		return this;
 
 	}
 	
 	/**
-	 * Click and set "How much do you currently spend on gas?" dropdown box
+	 * Set "How much do you currently spend on gas?" dropdown box
 	 * 
-	 * Pre-requisite: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
+	 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I don't have my bill checked".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page setHowMuchDoYouSpendOnGasDropdown(String dropdownValue){
-    	//Click on dropdown so it is in view.
-		gasPeriod_dropdown.click();
     	
-    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='gas_current_spend_period_chosen']/div/ul")).findElements(By.tagName("li"));
-
-    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-    	String[] liListArray = new String[listOfLi.size()];
+	 	//Initialise Select and point to the appropriate Select ID
+    	Select select = new Select(gasPeriod_dropdown);
     	
-    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<=listOfLi.size(); i++) {
-    		
-    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-    		WebElement liList = driver.findElement(By.xpath("//*[@id='gas_current_spend_period_chosen']/div/ul/li[" + i + "]"));
-    		
-    		//Get all the values of the <li> (values) and store it into a string.
-    		String eachValue = liList.getText();
-    		
-    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-    		liListArray[i-1] = eachValue;
-    	}
+    	//Creating the Javascript Executor interface object by type casting
+    	JavascriptExecutor executor = (JavascriptExecutor)driver;
     	
-
+    	//Find the Select ID and set it to visible
+    	executor.executeScript("document.getElementById('gas-current-spend-period').style.display='block';");
+    	
+    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
     	try {
-        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-    		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-        	
-           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-        	if (conversionArray == -1){
-        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-        		Assert.fail();
-        		
-        	} else {
-            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-            	listOfLi.get(conversionArray).click();
-            	log.info(dropdownValue + " has been selected."); 	
-        	}
+    	select.selectByVisibleText(dropdownValue);
+    	
+    	//log output.
+    	log.info("'" + dropdownValue + "' drop down value has been selected.");
     	}
-    	 catch (ArrayIndexOutOfBoundsException e) {
-     		log.error(e);
-     	}  	
+    	//If user enters in a wrong value. Then output to console and fail test.
+    	catch (NoSuchElementException e) {
+    		
+    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+    	Assert.fail();
+    	}
 		return this;
 	}
 	
@@ -981,108 +884,73 @@ public class Energy_page {
     */
 	
 	/**
-	 * Click and set "What gas tariff are you on?" dropdown box
+	 * Set "What gas tariff are you on?" dropdown box
 	 * 
-	 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page setWhatGasTariffAreYouOnDropdown(String dropdownValue){
-    	//Click on dropdown so it is in view.
-		gasTariff_dropdown.click();
-    	
-    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='gas_tariff_additional_info_chosen']/div/ul")).findElements(By.tagName("li"));
 
-    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-    	String[] liListArray = new String[listOfLi.size()];
+	 	//Initialise Select and point to the appropriate Select ID
+    	Select select = new Select(gasTariff_dropdown);
     	
-    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<=listOfLi.size(); i++) {
-    		
-    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-    		WebElement liList = driver.findElement(By.xpath("//*[@id='gas_tariff_additional_info_chosen']/div/ul/li[" + i + "]"));
-    		
-    		//Get all the values of the <li> (values) and store it into a string.
-    		String eachValue = liList.getText();
-    		
-    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-    		liListArray[i-1] = eachValue;
-    	}
+    	//Creating the Javascript Executor interface object by type casting
+    	JavascriptExecutor executor = (JavascriptExecutor)driver;
     	
-
+    	//Find the Select ID and set it to visible
+    	executor.executeScript("document.getElementById('gas-tariff-additional-info').style.display='block';");
+    	
+    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
     	try {
-        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-    		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-        	
-           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-        	if (conversionArray == -1){
-        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-        		Assert.fail();
-        		
-        	} else {
-            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-            	listOfLi.get(conversionArray).click();
-            	log.info(dropdownValue + " has been selected."); 	
-        	}
+    	select.selectByVisibleText(dropdownValue);
+    	
+    	//log output.
+    	log.info("'" + dropdownValue + "' drop down value has been selected.");
     	}
-    	 catch (ArrayIndexOutOfBoundsException e) {
-     		log.error(e);
-     	}  	
+    	//If user enters in a wrong value. Then output to console and fail test.
+    	catch (NoSuchElementException e) {
+    		
+    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+    	Assert.fail();
+    	}
 		return this;
 	}
 	
 	/**
-	 * Click "How do you pay for your gas?" dropdown box
+	 * Set "How do you pay for your gas?" dropdown box
 	 * 
-	 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
+	 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 	 *
 	 * @param dropdownValue
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page setHowDoYouPayForYourGasDropdown(String dropdownValue){
-    	//Click on dropdown so it is in view.
-		howDoYouPayForGas_dropdown.click();
-    	
-    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='gas_payment_method_dropdown_link_chosen']/div/ul")).findElements(By.tagName("li"));
 
-    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-    	String[] liListArray = new String[listOfLi.size()];
+	 	//Initialise Select and point to the appropriate Select ID
+    	Select select = new Select(howDoYouPayForGas_dropdown);
     	
-    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-    	for(int i=1; i<=listOfLi.size(); i++) {
-    		
-    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-    		WebElement liList = driver.findElement(By.xpath("//*[@id='gas_payment_method_dropdown_link_chosen']/div/ul/li[" + i + "]"));
-    		
-    		//Get all the values of the <li> (values) and store it into a string.
-    		String eachValue = liList.getText();
-    		
-    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-    		liListArray[i-1] = eachValue;
-    	}
+    	//Creating the Javascript Executor interface object by type casting
+    	JavascriptExecutor executor = (JavascriptExecutor)driver;
     	
-
+    	//Find the Select ID and set it to visible
+    	executor.executeScript("document.getElementById('gas-payment-method-dropdown-link').style.display='block';");
+    	
+    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
     	try {
-        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-    		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-        	
-           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-        	if (conversionArray == -1){
-        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-        		Assert.fail();
-        		
-        	} else {
-            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-            	listOfLi.get(conversionArray).click();
-            	log.info(dropdownValue + " has been selected."); 	
-        	}
+    	select.selectByVisibleText(dropdownValue);
+    	
+    	//log output.
+    	log.info("'" + dropdownValue + "' drop down value has been selected.");
     	}
-    	 catch (ArrayIndexOutOfBoundsException e) {
-     		log.error(e);
-     	}  	
+    	//If user enters in a wrong value. Then output to console and fail test.
+    	catch (NoSuchElementException e) {
+    		
+    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+    	Assert.fail();
+    	}
+    	
 		return this;
 	}
 	
@@ -1090,13 +958,13 @@ public class Energy_page {
 	  /**
 		 * Click Yes for "Is gas your main source of heating?"
 		 * 
-		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
+		 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @return this Energy_page class instance.
 		 */	
 		public Energy_page clickYesForGasMainSourceOfHeating() {
 			//check if element is visible
-			wait = new WebDriverWait(driver, 10);
+			wait = new WebDriverWait(driver, timeout);
 			wait.until(ExpectedConditions.visibilityOf(yesGasIsYourMainSourceOfHeating_radioButton));
 			
 			//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -1116,13 +984,13 @@ public class Energy_page {
 	    /**
 		 * Click No for "Is gas your main source of heating?"
 		 * 
-		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
+		 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @return this Energy_page class instance.
 		 */	
 		public Energy_page clickNoForGasMainSourceOfHeating() {
 			//check if element is visible
-			wait = new WebDriverWait(driver, 10);
+			wait = new WebDriverWait(driver, timeout);
 			wait.until(ExpectedConditions.visibilityOf(noGasIsNotMainSourceOfHeating_radioButton));
 			
 			//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -1141,13 +1009,13 @@ public class Energy_page {
 		/**
 		 * Click kWh for "What is your current gas usage?"
 		 * 
-		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
+		 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @return this Energy_page class instance.
 		 */	
 		public Energy_page clickKwHForCurrentGasUsage() {
 			//check if element is visible
-			wait = new WebDriverWait(driver, 10);
+			wait = new WebDriverWait(driver, timeout);
 			wait.until(ExpectedConditions.visibilityOf(currentGasUsagekWh_radioButton));
 			
 			//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -1166,13 +1034,13 @@ public class Energy_page {
 	    /**
 		 * Click £ for "What is your current gas usage?"
 		 * 
-		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
+		 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @return this Energy_page class instance.
 		 */	
 		public Energy_page click£ForCurrentGasUsage() {
 			//check if element is visible
-			wait = new WebDriverWait(driver, 10);
+			wait = new WebDriverWait(driver, timeout);
 			wait.until(ExpectedConditions.visibilityOf(currentGasUsagePound_radioButton));
 			
 			//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -1191,72 +1059,55 @@ public class Energy_page {
 	    /**
 		 * Set text for "What is your current gas usage?" when kWh is clicked.
 		 * 
-		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
+		 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @return this Energy_page class instance.
 		 */	
-		public Energy_page setKwHTextForGas(int value) {
+		public Energy_page setKwhTextForGas(int value) {
 			//check if element is visible
-			wait = new WebDriverWait(driver, 10);
+			wait = new WebDriverWait(driver, timeout);
 			wait.until(ExpectedConditions.visibilityOf(gasUsage_textbox));
 			
 			gasUsage_textbox.clear();
 			gasUsage_textbox.sendKeys(""+value);
-			log.info("kWh: " + value + " has successfully been entered into kWh textbox.");
+			log.info("kWh: '" + value + "' has successfully been entered into kWh textbox.");
 			return this;
 
 		}
 		
 	    /**
-		 * Click and set "What is your current gas usage?" dropdown box for kWh.
+		 * Set "What is your current gas usage?" dropdown box for kWh.
 		 * 
-		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
+		 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @param dropdownValue
 		 * @return this Energy_page class instance.
 		 */	
 		public Energy_page setKwhForGasDropdown(String dropdownValue){
-	    	//Click on dropdown so it is in view.
-			gasUsagePeriod_dropdown.click();
-	    	
-	    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-	    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='type_of_Gas_bill_usage_dropdown_chosen']/div/ul")).findElements(By.tagName("li"));
 
-	    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-	    	String[] liListArray = new String[listOfLi.size()];
+		 	//Initialise Select and point to the appropriate Select ID
+	    	Select select = new Select(gasUsagePeriod_dropdown);
 	    	
-	    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-	    	for(int i=1; i<=listOfLi.size(); i++) {
-	    		
-	    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-	    		WebElement liList = driver.findElement(By.xpath("//*[@id='type_of_Gas_bill_usage_dropdown_chosen']/div/ul/li[" + i + "]"));
-	    		
-	    		//Get all the values of the <li> (values) and store it into a string.
-	    		String eachValue = liList.getText();
-	    		
-	    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-	    		liListArray[i-1] = eachValue;
-	    	}
+	    	//Creating the Javascript Executor interface object by type casting
+	    	JavascriptExecutor executor = (JavascriptExecutor)driver;
 	    	
-
+	    	//Find the Select ID and set it to visible
+	    	executor.executeScript("document.getElementById('type-of-Gas-bill-usage-dropdown').style.display='block';");
+	    	
+	    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
 	    	try {
-	        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-	    		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-	        	
-	           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-	        	if (conversionArray == -1){
-	        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-	        		Assert.fail();
-	        		
-	        	} else {
-	            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-	            	listOfLi.get(conversionArray).click();
-	            	log.info(dropdownValue + " has been selected."); 	
-	        	}
+	    	select.selectByVisibleText(dropdownValue);
+	    	
+	    	//log output.
+	    	log.info("'" + dropdownValue + "' drop down value has been selected.");
 	    	}
-	    	 catch (ArrayIndexOutOfBoundsException e) {
-	     		log.error(e);
-	     	}  	
+	    	//If user enters in a wrong value. Then output to console and fail test.
+	    	catch (NoSuchElementException e) {
+	    		
+	    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+	    	Assert.fail();
+	    	}
+	    
 			return this;
 		}
 		
@@ -1267,96 +1118,75 @@ public class Energy_page {
 		 */	
 		public Energy_page set£TextForGas(int value) {
 			//check if element is visible
-			wait = new WebDriverWait(driver, 10);
+			wait = new WebDriverWait(driver, timeout);
 			wait.until(ExpectedConditions.visibilityOf(gasSpend_textbox));
 
 			gasSpend_textbox.clear();
 			gasSpend_textbox.sendKeys(""+value);
 			gasSpend_textbox.click();
-			log.info("£: " + value + " has successfully been entered into £ textbox.");
+			log.info("£: '" + value + "' has successfully been entered into £ textbox.");
 			return this;
 
 		}
 		
 		/**
-		 * Click and set "What is your current gas usage?" dropdown box for £
+		 * Set "What is your current gas usage?" dropdown box for £
 		 * 
-		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
+		 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @param dropdownValue
 		 * @return this Energy_page class instance.
 		 */	
 		public Energy_page set£ForGasDropdown(String dropdownValue){
-	    	//Click on dropdown so it is in view.
-			gasSpendPeriod_dropdown.click();
-	    	
-	    	//Create a List for all of the <li> elements under <div id>. Which is where all of the other values are stored.
-	    	List<WebElement> listOfLi = driver.findElement(By.xpath("//*[@id='type_of_Gas_bill_dropdown_chosen']/div/ul")).findElements(By.tagName("li"));
 
-	    	//Instantiate an Array to store all of the <li> elements (values) so we can refer to them later. Create an array of string that has the size of all of the <li> elements.
-	    	String[] liListArray = new String[listOfLi.size()];
+		 	//Initialise Select and point to the appropriate Select ID
+	    	Select select = new Select(gasSpendPeriod_dropdown);
 	    	
-	    	//Create a for loop to iterate through each <li> (values) and get the text value of it. Starting from 1.
-	    	for(int i=1; i<=listOfLi.size(); i++) {
-	    		
-	    		//Create a web element that points to specific <li> (values), add the 'i' into <li> so it can iterate to each one until i < all <li> (other suppliers) elements
-	    		WebElement liList = driver.findElement(By.xpath("//*[@id='type_of_Gas_bill_dropdown_chosen']/div/ul/li[" + i + "]"));
-	    		
-	    		//Get all the values of the <li> (values) and store it into a string.
-	    		String eachValue = liList.getText();
-	    		
-	    		//Add each value of <li> (other suppliers) into an Array, starting from 0 (i-1 because i equals 1 due to <li> starts from 1 and array starts from 0).
-	    		liListArray[i-1] = eachValue;
-	    	}
+	    	//Creating the Javascript Executor interface object by type casting
+	    	JavascriptExecutor executor = (JavascriptExecutor)driver;
 	    	
-
+	    	//Find the Select ID and set it to visible
+	    	executor.executeScript("document.getElementById('type-of-Gas-bill-dropdown').style.display='block';");
+	    	
+	    	//Goto the Select ID and find the text associated to an option. Set it with user parameter.
 	    	try {
-	        	//Pass the String parameter from Cucumber file and locate the index number of the string using our stored Array.
-	    		int conversionArray = Arrays.asList(liListArray).indexOf(dropdownValue);
-	        	
-	           	//If the array index that is returned is lower than 0 (which is true when a value that doesn't exist in the array is trying to be selected, it turns into -1). Then it is printed to tell the user to change the value from Cucumber.
-	        	if (conversionArray == -1){
-	        		log.info(dropdownValue + " is not found! Please write a value that exists!");
-	        		Assert.fail();
-	        		
-	        	} else {
-	            	//Use the index number that has been located and give it to WebElement. Click the WebElement.
-	            	listOfLi.get(conversionArray).click();
-	            	log.info(dropdownValue + " has been selected."); 	
-	        	}
+	    	select.selectByVisibleText(dropdownValue);
+	    	
+	    	//log output.
+	    	log.info("'" + dropdownValue + "' drop down value has been selected.");
 	    	}
-	    	 catch (ArrayIndexOutOfBoundsException e) {
-	     		log.error(e);
-	     	}  	
+	    	//If user enters in a wrong value. Then output to console and fail test.
+	    	catch (NoSuchElementException e) {
+	    		
+	    	log.info("'" + dropdownValue + "' does not exist! Please use a value that exists.");
+	    	Assert.fail();
+	    	}
 			return this;
 		}
 		
 		/**
 		 * Click Date picker and set day for bill date for Gas (if kWh or £ is selected, can be used for both).
 		 * 
-		 * Pre-requisites: Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
+		 * <p><b>Pre-requisite:</b> Only use if on "Your Supplier" page for "Do you have your bill handy?" is set to "I've got my bill".
 		 *
 		 * @param dropdownValue
 		 * @return this Energy_page class instance.
 		 */	
-		public Energy_page setDateForBillDateForGas(String date){
+		public Energy_page setDayForBillDateViaDatePickerForGas(int day){
 			gasDatePicker.click();
 			List<WebElement> dates = driver.findElements(By.xpath(".//*[@id='gas-bill-day_table']/tbody//td"));
 			
 			int total_node = dates.size();
 			
 			for(int i=0; i<total_node;i++){
-				String day = dates.get(i).getText();
+				String singleDay = dates.get(i).getText();
 				
-				if(day.equals(date))
+				if(Integer.parseInt(singleDay) == day)
 				{
 					dates.get(i).click();
 					break;
 				}
-				
-
 			}
-			
 			return this;
 		}	
 		
@@ -1367,13 +1197,17 @@ public class Energy_page {
 	 */
 
     /**
-	 * Click Next Button
+	 * Click Next Button  
+	 *
+	 *<p><b>You can use this for (the locators are the same):</b>
+	 *<p>1)Use this to go from Electricity to Gas page 
+	 *<p>2)Use this to go from Gas page to Preferences Page
 	 *
 	 * @return this Energy_page class instance.
 	 */	
 	public Energy_page clickNextButton() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(next_button));
 		//click button
 		next_button.click();
@@ -1389,7 +1223,7 @@ public class Energy_page {
 	 */	
 	public Energy_page clickBackButton() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(back_button));
 		//click button
 		back_button.click();
@@ -1427,12 +1261,7 @@ public class Energy_page {
 		log.info("Page URL expected: " + URLs.yourPreferencesURL + "\nActual: " + driver.getCurrentUrl() + "\nSuccess! User is successfully on the correct Your Preferences page.");
 		return this;
 	}
-/*	public Energy_page fillElectricityDetails_ifEco7IsNotClicked(String electricityTariff, String howDoYouPayForYourElectricity, String electricityUsage, String setDayForBillDate){
-		
-		
-		return this;
-	}
-	*/
+
     /**
 	 * Constructor required for PageFactory with implicitWaits to poll DOM
 	 * 

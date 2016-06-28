@@ -11,8 +11,29 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import support.URLs;
-
+import urls.URLs;
+/**
+* <h1>Your Preferences Page</h1>
+* This page holds all elements and methods to those elements for Your Preferences webpage.
+* 
+* <p>
+* <b>Note:</b> This is a Page Object Model design using PageFactory. 
+* It allows us to have objects that we can interact with in a clean, neat and maintainable way.
+* Methods and logic are all applied here. 
+* 
+* <p>
+* <b>How it works:</b> Each method corresponds to a element on the webpage. For instance,
+* if you want to click on a button, the button id, xpath, css, className, tagName, linktext, partialLinkText
+* have been mapped to. All you have todo is call the method for that particular webelement and it will interact with it. 
+* Javadoc comments have been applied to all public methods, just in case you don't understand what a method does. Remember, some of them
+* have pre-requisites, please read them to ensure that those pre-requisites are fulfilled before invoking that method.
+*
+* 
+*
+* @author  Zukky Baig
+* @version 1.0
+* @since   2016-06-27
+*/
 public class Preferences_page {
 	private static Logger log = LogManager.getLogger(Preferences_page.class);
 	private WebDriver driver;
@@ -192,10 +213,10 @@ public class Preferences_page {
 	 * @param emailValue
 	 * @return this Preferences_page class instance.
 	 */
-	public Preferences_page setEmailAddress(String emailValue) {
+	public Preferences_page setEmailAddress(String emailAddress) {
 		email_textbox.clear();
-		email_textbox.sendKeys(emailValue);
-		log.info("Email: " + emailValue + " has successfully been entered into email textbox.");
+		email_textbox.sendKeys(emailAddress);
+		log.info("Email: " + emailAddress + " has successfully been entered into email textbox.");
 		return this;
 		
 	}
@@ -207,7 +228,7 @@ public class Preferences_page {
 	 */	
 	public Preferences_page clickMarketingInformationCheckbox() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(marketingPreference_checkbox));
 		
 		//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -230,7 +251,7 @@ public class Preferences_page {
 	 */	
 	public Preferences_page clickTermsAndConditionsCheckbox() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(termsAndConditions_checkbox));
 		
 		//Check if it has been clicked already. If so, do not click. If not, then click.
@@ -253,7 +274,7 @@ public class Preferences_page {
 	 */	
 	public Preferences_page clickGotoPricesButton() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(goToPrices_button));
 		//click button
 		goToPrices_button.click();
@@ -269,7 +290,7 @@ public class Preferences_page {
 	 */	
 	public Preferences_page clickBackButton() {
 		//check if element is visible
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(back_button));
 		//click button
 		back_button.click();
